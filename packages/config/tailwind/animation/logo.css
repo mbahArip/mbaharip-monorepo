@@ -1,0 +1,281 @@
+/**
+ *
+ * Color Accent
+ *
+**/
+#logo g#groupTextAccent .colorAccent,
+#logo g#groupMarkAccent .colorAccent {
+	fill: #ea580c;
+}
+/**
+ *
+ * Animation Text Accent
+ *
+**/
+#logo.animate g#groupTextAccent .colorAccent {
+	stroke: #ea580c;
+	stroke-width: 2px;
+	fill: transparent;
+	animation: textAccent 1.5s ease-in-out 0.5s forwards,
+		textAccentFill 1s ease-in-out 2s forwards;
+}
+#logo.animate g#groupTextAccent .colorAccent:nth-child(1) {
+	stroke-dasharray: 163;
+	stroke-dashoffset: 163;
+}
+#logo.animate g#groupTextAccent .colorAccent:nth-child(2) {
+	stroke-dasharray: 341;
+	stroke-dashoffset: 341;
+}
+#logo.animate g#groupTextAccent .colorAccent:nth-child(3) {
+	stroke-dasharray: 341;
+	stroke-dashoffset: 341;
+}
+#logo.animate g#groupTextAccent .colorAccent:nth-child(4) {
+	stroke-dasharray: 468;
+	stroke-dashoffset: 468;
+}
+#logo.animate g#groupTextAccent .colorAccent:nth-child(5) {
+	stroke-dasharray: 876;
+	stroke-dashoffset: 876;
+}
+#logo.animate g#groupTextAccent .colorAccent:nth-child(6) {
+	stroke-dasharray: 316;
+	stroke-dashoffset: 316;
+}
+
+/**
+ *
+ * Color Main
+ *
+**/
+#logo.light g#groupTextMain .colorMain,
+#logo.light g#groupMarkMain .colorMain {
+	fill: #f1f1f1;
+}
+#logo.dark g#groupTextMain .colorMain,
+#logo.dark g#groupMarkMain .colorMain {
+	fill: #0d0d0d;
+}
+/**
+ *
+ * Animation Text Main
+ *
+**/
+#logo.animate.light g#groupTextMain .colorMain {
+	stroke: #f1f1f1;
+	stroke-width: 2px;
+	fill: transparent;
+	animation: textMain 2s ease-in-out forwards,
+		textMainLightFill 1s ease 2s forwards;
+}
+#logo.animate.dark g#groupTextMain .colorMain {
+	stroke: #0d0d0d;
+	stroke-width: 2px;
+	fill: transparent;
+	animation: textMain 2s ease-in-out forwards,
+		textMainDarkFill 1s ease 2s forwards;
+}
+#logo.animate g#groupTextMain .colorMain:nth-child(1) {
+	stroke-dasharray: 2032;
+	stroke-dashoffset: 2032;
+}
+#logo.animate g#groupTextMain .colorMain:nth-child(2) {
+	stroke-dasharray: 1320;
+	stroke-dashoffset: 1320;
+}
+#logo.animate g#groupTextMain .colorMain:nth-child(3) {
+	stroke-dasharray: 1218;
+	stroke-dashoffset: 1218;
+}
+#logo.animate g#groupTextMain .colorMain:nth-child(4) {
+	stroke-dasharray: 1990;
+	stroke-dashoffset: 1990;
+}
+#logo.animate g#groupTextMain .colorMain:nth-child(5) {
+	stroke-dasharray: 1157;
+	stroke-dashoffset: 1157;
+}
+#logo.animate g#groupTextMain .colorMain:nth-child(6) {
+	stroke-dasharray: 1388;
+	stroke-dashoffset: 1388;
+}
+#logo.animate g#groupTextMain .colorMain:nth-child(7) {
+	stroke-dasharray: 1002;
+	stroke-dashoffset: 1002;
+}
+#logo.animate g#groupTextMain .colorMain:nth-child(8) {
+	stroke-dasharray: 647;
+	stroke-dashoffset: 647;
+}
+#logo.animate g#groupTextMain .colorMain:nth-child(9) {
+	stroke-dasharray: 311;
+	stroke-dashoffset: 311;
+}
+#logo.animate g#groupTextMain .colorMain:nth-child(10) {
+	stroke-dasharray: 1309;
+	stroke-dashoffset: 1309;
+}
+
+/**
+ *
+ * Animation Mark Main
+ *
+**/
+#logo.animate.light g#groupMarkMain .colorMain {
+	stroke: #f1f1f1;
+	stroke-width: 4px;
+	fill: transparent;
+}
+#logo.animate.dark g#groupMarkMain .colorMain {
+	stroke: #0d0d0d;
+	stroke-width: 4px;
+	fill: transparent;
+}
+#logo.animate.light g#groupMarkMain .colorMain:nth-child(1) {
+	stroke-dasharray: 881;
+	stroke-dashoffset: 881;
+	animation: markStrokeSide 7234ms linear infinite,
+		markLightFill 3s ease infinite;
+}
+#logo.animate.light g#groupMarkMain .colorMain:nth-child(2) {
+	stroke-dasharray: 881;
+	stroke-dashoffset: 100;
+	animation: markStrokeSide 7524ms linear reverse infinite,
+		markLightFill 3s ease infinite;
+}
+#logo.animate.light g#groupMarkMain .colorMain:nth-child(3) {
+	stroke-dasharray: 458;
+	stroke-dashoffset: 458;
+	animation: markStrokeTop 5124ms linear reverse infinite,
+		markLightFill 3s ease infinite;
+}
+#logo.animate.dark g#groupMarkMain .colorMain:nth-child(1) {
+	stroke-dasharray: 881;
+	stroke-dashoffset: 881;
+	animation: markStrokeSide 7234ms linear infinite,
+		markDarkFill 3s ease infinite;
+}
+#logo.animate.dark g#groupMarkMain .colorMain:nth-child(2) {
+	stroke-dasharray: 881;
+	stroke-dashoffset: 100;
+	animation: markStrokeSide 7524ms linear reverse infinite,
+		markDarkFill 3s ease infinite;
+}
+#logo.animate.dark g#groupMarkMain .colorMain:nth-child(3) {
+	stroke-dasharray: 458;
+	stroke-dashoffset: 458;
+	animation: markStrokeTop 5124ms linear reverse infinite,
+		markDarkFill 3s ease infinite;
+}
+
+/**
+ *
+ * Animation Mark Accent
+ *
+**/
+#logo.animate g#groupMarkAccent .colorAccent {
+	fill: transparent;
+	animation: markOrangeFill 3s ease infinite;
+}
+
+/**
+ *
+ * Keyframes
+ *
+**/
+@keyframes textMain {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+@keyframes textMainLightFill {
+	to {
+		fill: #f1f1f1;
+		stroke: transparent;
+	}
+}
+@keyframes textMainDarkFill {
+	to {
+		fill: #0d0d0d;
+		stroke: transparent;
+	}
+}
+@keyframes textAccent {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+@keyframes textAccentFill {
+	to {
+		fill: #ea580c;
+		stroke: transparent;
+	}
+}
+@keyframes markLightFill {
+	0% {
+		fill: transparent;
+	}
+	50% {
+		fill: #f1f1f155;
+	}
+	100% {
+		fill: transparent;
+	}
+}
+@keyframes markDarkFill {
+	0% {
+		fill: transparent;
+	}
+	50% {
+		fill: #0d0d0dbb;
+	}
+	100% {
+		fill: transparent;
+	}
+}
+@keyframes markOrangeFill {
+	0% {
+		fill: transparent;
+	}
+	50% {
+		fill: #ea580c;
+	}
+	100% {
+		fill: transparent;
+	}
+}
+@keyframes markStrokeSide {
+	0% {
+		stroke-dashoffset: 0;
+	}
+	25% {
+		stroke-dashoffset: 881;
+	}
+	50% {
+		stroke-dashoffset: 1762;
+	}
+	75% {
+		stroke-dashoffset: 2643;
+	}
+	100% {
+		stroke-dashoffset: 3524;
+	}
+}
+@keyframes markStrokeTop {
+	0% {
+		stroke-dashoffset: 1832;
+	}
+	25% {
+		stroke-dashoffset: 1374;
+	}
+	50% {
+		stroke-dashoffset: 916;
+	}
+	75% {
+		stroke-dashoffset: 458;
+	}
+	100% {
+		stroke-dashoffset: 0;
+	}
+}

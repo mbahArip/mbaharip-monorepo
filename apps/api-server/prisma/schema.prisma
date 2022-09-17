@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model links {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  url               String
+  domain            String @default("mbaharip.me")
+  name              String
+  icon              String
+  viewcount         Int @default(0)
+  compact           Boolean @default(false)
+  active            Boolean @default(true)
+  hide              Boolean @default(false)
+  order             Int @default(0)
+}
+
+model blogs {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  title             String
+  summary           String
+  content           String //Encrypt this field
+  thumbnail         String
+  tags              String[]
+  views             Int @default(0)
+  published         Boolean @default(true)
+  createdAt         DateTime @default(now())
+  modifiedAt        DateTime @updatedAt
+  comments          comments[] @relation("BlogComments")
+}
+
+model comments {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  email             String
+  content           String //Encrypt this field
+  blogId            String
+  blog              blogs @relation("BlogComments", fields: [blogId], references: [id])
+  createdAt         DateTime @default(now())
+  unread            Boolean @default(true)
+  reply             Boolean @default(false)
+  replyTo           String @default("")
+}
+
+model works {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  title             String
+  summary           String
+  images            String[]
+  thumbnail         String
+  tags              String[]
+  views             Int @default(0)
+  published         Boolean @default(true)
+  createdAt         DateTime @default(now())
+  modifiedAt        DateTime @updatedAt
+}
+
+model products {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  priceLocal        Int
+  priceUSD          Int
+  thumbnail         String
+  images            String[]
+  tags              String[]
+  views             Int @default(0)
+  urlGumroad        String
+  urlKaryakarsa     String
+}
+
+
+model promotions {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  codeID            String
+  promoCode         String
+  expiredAt         DateTime
+}
+
+model shortlinks {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  active            Boolean @default(true)
+  alias             String @unique
+  secret            String
+  destination       String
+  visits            Int @default(0)
+  createdAt         DateTime @default(now())
+}
+
+model access {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  service           String @unique
+  access_token      String
+  refresh_token     String
+  expires_in        Int
+}
+
+model nijigen_logo {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  category          String
+  title             String @unique
+  tags              String[]
+  thumbnail         String
+  svgImage          String
+  pngImage          String
+  downloads         Int @default(0)
+  createdAt         DateTime @default(now())
+  modifiedAt        DateTime @updatedAt
+}

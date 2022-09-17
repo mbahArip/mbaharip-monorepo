@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+/**
+ * Fonts
+ */
+@font-face {
+	font-family: 'LOF Nexus 6';
+	src: url('./fonts/Nexus_6-Regular.woff2') format('woff2'),
+		url('./fonts/Nexus_6-Regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'ORIENTICA';
+	src: url('./fonts/ORIENTICA-Regular.woff2') format('woff2'),
+		url('./fonts/ORIENTICA-Regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kosugi&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Zen+Antique+Soft&display=swap');
+
+/**
+ * Animation
+ */
+@import './animation/logo.css';
+@import './animation/preloader.css';
+
+/**
+ * Extend
+ */
+@layer base {
+	/* Global */
+	body {
+		@apply min-h-screen w-screen overflow-x-hidden bg-mbaharip-dark text-mbaharip-light;
+	}
+
+	/* Typography */
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		@apply my-1;
+	}
+	h1 {
+		@apply text-3xl font-bold;
+	}
+	h2 {
+		@apply text-2xl font-bold;
+	}
+	h3 {
+		@apply text-xl font-bold;
+	}
+	h4 {
+		@apply text-lg font-bold;
+	}
+	h5 {
+		@apply text-lg font-bold;
+	}
+	h6 {
+		@apply text-base font-bold;
+	}
+
+	/* User Input */
+	button {
+		@apply cursor-pointer rounded-lg outline outline-0 transition
+		focus:outline-2 focus:outline-offset-0 focus:outline-mbaharip-light/75
+		disabled:cursor-default;
+	}
+	a {
+		@apply cursor-pointer rounded-lg p-0 font-bold tracking-wider text-mbaharip-light transition-all
+		hover:text-mbaharip-primary-hover
+		active:text-mbaharip-primary-active;
+	}
+}
+
+@layer components {
+	/* Divider */
+	.divider {
+		@apply my-4 mx-0 rounded-lg border border-b border-mbaharip-light/50;
+	}
+	.divider .vertical {
+		@apply mx-4 my-0 border-r;
+	}
+
+	/* Button */
+	.btn-primary {
+		@apply bg-mbaharip-primary text-mbaharip-light
+		hover:bg-mbaharip-primary-hover hover:text-mbaharip-light-hover
+		active:bg-mbaharip-primary-active active:text-mbaharip-light-active
+		disabled:bg-mbaharip-light/50 disabled:text-mbaharip-light/75;
+	}
+	.btn-outline {
+		@apply border border-mbaharip-primary text-mbaharip-primary
+		hover:bg-mbaharip-primary hover:text-mbaharip-light
+		active:bg-mbaharip-primary-active active:text-mbaharip-light-active
+		disabled:border-mbaharip-light/50 disabled:bg-transparent disabled:text-mbaharip-light/75;
+	}
+	.btn-ghost {
+		@apply text-mbaharip-primary
+		hover:bg-mbaharip-primary/75 hover:text-mbaharip-light-hover
+		active:bg-mbaharip-primary/25 active:text-mbaharip-light-active
+		disabled:bg-transparent disabled:text-mbaharip-light/75;
+	}
+	.btn-link {
+		@apply font-bold text-mbaharip-primary
+		hover:text-mbaharip-primary-hover
+		active:text-mbaharip-primary-active
+		disabled:text-mbaharip-light/50;
+	}
+}
