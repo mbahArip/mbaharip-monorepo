@@ -18,7 +18,7 @@ const mobileMenuContainer: Variants = {
 		x: -100,
 		transition: {
 			duration: 0.25,
-			when: 'afterChildren',
+			// when: 'afterChildren',
 		},
 	},
 };
@@ -60,16 +60,20 @@ const mobileMenuItem: Variants = {
 };
 
 const mobileHamburger: Variants = {
-	init: {
+	initIn: {
 		opacity: 0,
 		rotate: 180,
+	},
+	initOut: {
+		opacity: 1,
+		rotate: 0,
 	},
 	in: {
 		opacity: 1,
 		rotate: 0,
 		transition: {
 			duration: 0.5,
-			easings: 'easeInOut',
+			ease: 'easeInOut',
 		},
 	},
 	out: {
@@ -77,7 +81,7 @@ const mobileHamburger: Variants = {
 		rotate: 180,
 		transition: {
 			duration: 0.5,
-			easings: 'easeInOut',
+			ease: 'easeInOut',
 		},
 	},
 };
@@ -133,7 +137,7 @@ const Navbar: FC = () => {
 						}}
 					>
 						<motion.div
-							initial={'init'}
+							initial={'initOut'}
 							animate={isMenuOpen ? 'out' : 'in'}
 							variants={mobileHamburger}
 							className='absolute'
@@ -146,7 +150,7 @@ const Navbar: FC = () => {
 						</motion.div>
 
 						<motion.div
-							initial={'init'}
+							initial={'initIn'}
 							animate={isMenuOpen ? 'in' : 'out'}
 							variants={mobileHamburger}
 							className='absolute'
@@ -198,6 +202,7 @@ const Navbar: FC = () => {
 			{/* Mobile menu */}
 			<motion.div
 				className={`fixed z-[999] flex h-screen w-screen flex-col items-start justify-center bg-mbaharip-dark md:hidden`}
+				initial={'init'}
 				animate={isMenuOpen ? 'in' : 'out'}
 				variants={mobileMenuContainer}
 				key={'mobile-menu-container'}
