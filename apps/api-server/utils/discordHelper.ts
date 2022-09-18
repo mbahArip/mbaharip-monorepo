@@ -40,7 +40,6 @@ const postToDiscord = async (
 	useEmbed: boolean = false,
 	embeds?: Embeds,
 ) => {
-	// Create data payload
 	type Embed = {
 		title: string;
 		description: string;
@@ -75,7 +74,6 @@ const postToDiscord = async (
 		}
 	}
 
-	// Get webhook URL
 	const targetWebhookURL = discordWebhookURL[channel];
 	const urlArray = targetWebhookURL.split('api/');
 	const endpoint = `${urlArray[0]}api/v10/${urlArray[1]}`;
