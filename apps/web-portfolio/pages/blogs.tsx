@@ -1,27 +1,16 @@
 import type { NextPage } from 'next';
 import Navbar from '../components/Shared/Navbar';
 import { NextSeo } from 'next-seo';
+import MainLayout from '../components/Layout/MainLayout';
+import HeaderLayout from '../components/Layout/HeaderLayout';
 
 const Home: NextPage = () => {
 	return (
-		<>
-			<div
-				className={`flex min-h-screen w-screen flex-col items-center justify-center`}
-			>
-				Lorem
-			</div>
-		</>
+		<MainLayout>
+			<HeaderLayout>Lorem ipsum</HeaderLayout>
+			<div className={`my-6 h-fit md:my-8`}>Lorem</div>
+		</MainLayout>
 	);
-};
-
-// Get server-side props
-export const getServerSideProps = async () => {
-	await new Promise((resolve) => {
-		setTimeout(resolve, 1000);
-	});
-	return {
-		props: {},
-	};
 };
 
 export default Home;

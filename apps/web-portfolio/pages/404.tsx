@@ -28,11 +28,11 @@ const NotFound: NextPage = () => {
 					<h1 className='text-4xl'>404</h1>
 					<span className='text-2xl'>Not found</span>
 				</div>
-				<span className='flex items-center gap-2 text-sm'>
+				<span className='flex flex-wrap items-center justify-center gap-2 px-8 text-sm md:px-0'>
 					The requested URL
-					<h6 className='rounded bg-mbaharip-light/20 px-1 font-mono text-sm font-normal'>
+					<code className='rounded bg-mbaharip-light/20 px-1 font-mono text-sm font-normal'>
 						{path}
-					</h6>
+					</code>
 					is not found on the server.
 				</span>
 				<div className='my-8 flex flex-col gap-4 md:my-4 md:flex-row md:gap-2'>

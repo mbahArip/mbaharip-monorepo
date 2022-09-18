@@ -1,4 +1,6 @@
 import { FC, ReactNode } from 'react';
+import { motion } from 'framer-motion';
+import { decorationVariants, textVariants } from './SectionHeader.variants';
 
 type BlogHeaderProps = {
 	useDecoration?: boolean;
@@ -10,9 +12,26 @@ const SectionHeader: FC<BlogHeaderProps> = ({
 	children,
 }) => {
 	return (
-		<div className='flex items-center gap-4'>
-			{useDecoration && <div className='h-[2.25rem] w-2 bg-mbaharip-primary' />}
-			<h1 className='w-full'>{children}</h1>
+		<div className='flex items-center px-4'>
+			{useDecoration && (
+				<motion.div
+					className='w-2 bg-mbaharip-primary'
+					initial={'init'}
+					animate={'in'}
+					exit={'out'}
+					variants={decorationVariants}
+				/>
+			)}
+			<div className='w-fit overflow-hidden px-4'>
+				<motion.h1
+					initial={'init'}
+					animate={'in'}
+					exit={'out'}
+					variants={textVariants}
+				>
+					{children}
+				</motion.h1>
+			</div>
 		</div>
 	);
 };

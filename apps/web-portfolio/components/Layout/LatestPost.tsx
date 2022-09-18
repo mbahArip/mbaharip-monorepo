@@ -5,6 +5,7 @@ import { Button, LogoMark } from 'ui';
 import useDeviceType from '../../hooks/useDeviceType';
 import Card from '../Card';
 import SectionHeader from '../Typography/SectionHeader';
+import SectionLayout from './SectionLayout';
 
 type LatestPostProps = {
 	title: string;
@@ -37,7 +38,7 @@ const LatestPost: FC<LatestPostProps> = ({
 					</Button>
 				</Link>
 			</div>
-			<div className='my-4 flex w-full flex-col flex-wrap items-start justify-center gap-y-4 md:flex-row'>
+			<div className='my-4 flex w-full flex-col flex-wrap items-start justify-center gap-y-4 px-4 md:flex-row md:px-16'>
 				{postsLoading ? (
 					<LogoMark
 						size='small'
@@ -46,14 +47,19 @@ const LatestPost: FC<LatestPostProps> = ({
 					/>
 				) : (
 					<>
-						{postsData.data?.data?.length > 0 ? (
+						{postsData?.data?.data?.length > 0 ? (
 							<>
 								{postsData.data?.data?.map((post: any, index: number) => (
-									<Card
-										key={`${post.id}`}
-										data={post}
-										type={postType}
-									/>
+									<SectionLayout
+										delay={0.25 * index}
+										key={index}
+									>
+										<Card
+											data={post}
+											type={postType}
+											key={index}
+										/>
+									</SectionLayout>
 								))}
 							</>
 						) : (

@@ -41,6 +41,9 @@
 	}
 
 	/* Typography */
+	p {
+		@apply cursor-default select-none;
+	}
 	h1,
 	h2,
 	h3,
@@ -78,6 +81,9 @@
 		@apply cursor-pointer rounded-lg p-0 font-bold tracking-wider text-mbaharip-light transition-all
 		hover:text-mbaharip-primary-hover
 		active:text-mbaharip-primary-active;
+	}
+	*[href] {
+		@apply cursor-pointer;
 	}
 }
 

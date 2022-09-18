@@ -1,26 +1,19 @@
 import { Variants } from 'framer-motion';
 
 export const mobileMenuContainer: Variants = {
-	init: {
-		display: 'none',
-		opacity: 0,
-	},
 	in: {
-		display: 'flex',
 		opacity: 1,
+		x: 0,
 		transition: {
-			duration: 0.5,
+			duration: 0.25,
 		},
 	},
 	out: {
-		display: 'none',
 		opacity: 0,
+		x: -100,
 		transition: {
-			duration: 0.5,
-			delay: 0.5,
-			display: {
-				delay: 1,
-			},
+			duration: 0.25,
+			when: 'afterChildren',
 		},
 	},
 };
@@ -29,7 +22,7 @@ export const mobileMenuList: Variants = {
 		pointerEvents: 'auto',
 		transition: {
 			staggerChildren: 0.1,
-			delayChildren: 0.5,
+			delayChildren: 0.25,
 		},
 	},
 	out: {
@@ -41,6 +34,10 @@ export const mobileMenuList: Variants = {
 	},
 };
 export const mobileMenuItem: Variants = {
+	init: {
+		x: -100,
+		opacity: 0,
+	},
 	in: {
 		x: 0,
 		opacity: 1,
@@ -66,16 +63,16 @@ export const mobileHamburger: Variants = {
 		opacity: 1,
 		rotate: 0,
 		transition: {
-			duration: 0.25,
-			type: 'spring',
+			duration: 0.5,
+			easings: 'easeInOut',
 		},
 	},
 	out: {
 		opacity: 0,
 		rotate: 180,
 		transition: {
-			duration: 0.25,
-			type: 'spring',
+			duration: 0.5,
+			easings: 'easeInOut',
 		},
 	},
 };

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { LogoMark } from 'ui';
-import { motion } from 'framer-motion';
+import { motion, useAnimationControls } from 'framer-motion';
 import Link from 'next/link';
 import { MdOutlineMenu, MdOutlineClose, MdLaunch } from 'react-icons/md';
 import { useRouter } from 'next/router';
@@ -56,7 +56,7 @@ const Navbar: FC = () => {
 						color='light'
 					/>
 					<div
-						className='aspect-square relative right-4 grid cursor-pointer place-items-center rounded'
+						className='aspect-square relative right-4 grid place-items-center rounded'
 						onClick={() => {
 							setIsMenuOpen(!isMenuOpen);
 						}}
@@ -66,6 +66,7 @@ const Navbar: FC = () => {
 							animate={isMenuOpen ? 'out' : 'in'}
 							variants={mobileHamburger}
 							className='absolute'
+							key={'menu-open'}
 						>
 							<MdOutlineMenu
 								className='text-mbaharip-light'
@@ -78,6 +79,7 @@ const Navbar: FC = () => {
 							animate={isMenuOpen ? 'in' : 'out'}
 							variants={mobileHamburger}
 							className='absolute'
+							key={'menu-close'}
 						>
 							<MdOutlineClose
 								className='text-mbaharip-light'
@@ -88,10 +90,17 @@ const Navbar: FC = () => {
 				</div>
 				{/* Desktop */}
 				<div className='mx-auto hidden w-full max-w-screen-xl items-center justify-between md:flex'>
-					<LogoMark
-						size='xsmall'
-						color='light'
-					/>
+					<Link
+						href={'/'}
+						passHref
+					>
+						<div>
+							<LogoMark
+								size='xsmall'
+								color='light'
+							/>
+						</div>
+					</Link>
 					<div className='flex'>
 						{menuLinks.map((link, index) => (
 							<Link
@@ -99,7 +108,7 @@ const Navbar: FC = () => {
 								key={`desktop-menu-link-${index}`}
 							>
 								<a
-									className={`flex cursor-pointer items-center gap-1 px-4  py-2 text-xl transition hover:opacity-100 ${
+									className={`flex items-center gap-1 px-4  py-2 text-xl transition hover:opacity-100 ${
 										router.pathname === link.url
 											? 'font-bold text-mbaharip-primary opacity-100'
 											: 'font-normal text-mbaharip-light opacity-75 hover:text-mbaharip-light-hover'
@@ -117,11 +126,19 @@ const Navbar: FC = () => {
 
 			{/* Mobile menu */}
 			<motion.div
-				className={`fixed left-0 top-0 z-[999] h-screen w-screen flex-col items-start justify-center bg-mbaharip-dark md:hidden`}
+				className={`fixed z-[999] flex h-screen w-screen flex-col items-start justify-center bg-mbaharip-dark md:hidden`}
+				// initial={{
+				// 	opacity: 0,
+				// 	x: -100,
+				// }}
 				animate={isMenuOpen ? 'in' : 'out'}
 				variants={mobileMenuContainer}
+				key={'mobile-menu-container'}
 			>
-				<motion.ul variants={mobileMenuList}>
+				<motion.ul
+					variants={mobileMenuList}
+					key={'mobile-menu-list'}
+				>
 					{menuLinks.map((link, index) => {
 						return (
 							<Link
@@ -130,7 +147,7 @@ const Navbar: FC = () => {
 							>
 								<motion.li
 									key={`mobile-menu-item-${index}`}
-									className='my-8 cursor-pointer'
+									className='my-8'
 									variants={mobileMenuItem}
 									onClick={() => {
 										if (router.pathname === link.url) {

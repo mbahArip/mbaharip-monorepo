@@ -5,7 +5,6 @@ import { LoadingBar } from 'ui';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, MotionConfig } from 'framer-motion';
-import Navbar from '../components/Shared/Navbar';
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const router = useRouter();
@@ -84,11 +83,14 @@ const App = ({ Component, pageProps }: AppProps) => {
 			/>
 			<MotionConfig reducedMotion='user'>
 				<AnimatePresence
-					initial={false}
-					mode={'sync'}
+					mode='sync'
+					initial={true}
 					onExitComplete={() => {
-						if (typeof window !== 'undefined') window.scrollTo(0, 0);
+						if (typeof window !== 'undefined') {
+							window.scrollTo({ top: 0 });
+						}
 					}}
+					key={pathname}
 				>
 					<Component
 						{...pageProps}

@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import { MdEmail } from 'react-icons/md';
 import { FaDiscord, FaGithub, FaTwitter } from 'react-icons/fa';
-import SectionHeader from '../Typography/SectionHeader';
 
 const contacs = [
 	{
@@ -27,30 +26,17 @@ const contacs = [
 	},
 ];
 
-type FooterItemProps = {
-	title: string;
-	children: ReactNode;
-};
-
-const FooterItem: FC<FooterItemProps> = ({ title, children }) => {
-	return (
-		<div className='flex max-w-xs flex-col items-start justify-center'>
-			<SectionHeader>{title}</SectionHeader>
-			<div className='flex flex-col'>{children}</div>
-		</div>
-	);
-};
-
 const Footer: FC = () => {
 	const currentYear = new Date().getFullYear();
 
 	return (
 		<div className='mx-auto flex h-fit w-screen flex-col items-center py-2'>
 			<div className='divider w-full max-w-screen-md border-mbaharip-primary' />
-			<div className='my-2 flex w-full max-w-screen-md flex-col items-start justify-center gap-4 px-8 md:flex-row md:gap-64 '>
-				<FooterItem title='Contact'>
-					You can contact me via:
-					<div className='flex flex-col flex-wrap gap-1'>
+			<div className='my-2 flex w-full flex-col items-start justify-center gap-4 px-8 md:flex-row'>
+				<div className='flex w-full flex-col items-start justify-center md:items-center md:text-center'>
+					<h1>Contact</h1>
+					<span>You can contact me via:</span>
+					<div className='flex flex-col flex-wrap gap-1 md:flex-row md:gap-4'>
 						{contacs.map((contact) => (
 							<Link
 								key={contact.name}
@@ -67,11 +53,7 @@ const Footer: FC = () => {
 							</Link>
 						))}
 					</div>
-				</FooterItem>
-				<FooterItem title='Quick links'>
-					<span>Lorem</span>
-					<span>Ipsum</span>
-				</FooterItem>
+				</div>
 			</div>
 			<span className='mt-4'>
 				© {currentYear} mbahArip. All rights reserved.
