@@ -83,18 +83,18 @@ const App = ({ Component, pageProps }: AppProps) => {
 			/>
 			<MotionConfig reducedMotion='user'>
 				<AnimatePresence
-					mode='sync'
-					initial={true}
+					exitBeforeEnter
+					// mode='sync'
+					// initial={true}
 					onExitComplete={() => {
 						if (typeof window !== 'undefined') {
 							window.scrollTo({ top: 0 });
 						}
 					}}
-					key={pathname}
 				>
 					<Component
 						{...pageProps}
-						key={'component'}
+						key={router.asPath}
 					/>
 				</AnimatePresence>
 			</MotionConfig>

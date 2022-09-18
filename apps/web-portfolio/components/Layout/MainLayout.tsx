@@ -4,7 +4,7 @@ import Navbar from '../Shared/Navbar';
 import { motion, Variants } from 'framer-motion';
 import useDeviceType from '../../hooks/useDeviceType';
 
-const variants:Variants = {
+const variants: Variants = {
 	init: { opacity: 0, x: 0, y: 20 },
 	in: { opacity: 1, x: 0, y: 0 },
 	out: { opacity: 0, x: -0, y: 20 },
@@ -27,7 +27,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
 				variants={variants}
 				transition={{
 					duration: 0.4,
-					type: 'easeInOut',
+					ease: 'easeInOut',
 					delay: isDesktop ? 0.5 : 0,
 				}}
 				style={{ position: 'relative' }}
