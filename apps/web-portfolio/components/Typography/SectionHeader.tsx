@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import { decorationVariants, textVariants } from './SectionHeader.variants';
+import { decorationVariants, textVariants } from './sectionHeader.variants';
 
 type BlogHeaderProps = {
 	useDecoration?: boolean;

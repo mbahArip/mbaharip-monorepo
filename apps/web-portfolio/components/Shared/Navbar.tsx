@@ -9,7 +9,7 @@ import {
 	mobileMenuList,
 	mobileMenuItem,
 	mobileHamburger,
-} from './Navbar.variants';
+} from './navbar.variants';
 
 const menuLinks = [
 	{
