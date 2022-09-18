@@ -59,7 +59,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 				additionalLinkTags={[
 					{
 						rel: 'icon',
-						href: '/images/logo/light-mark.svg',
+						href: '/favicon.svg',
 					},
 				]}
 				twitter={{
