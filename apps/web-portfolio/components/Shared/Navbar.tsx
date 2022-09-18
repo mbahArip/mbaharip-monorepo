@@ -1,15 +1,86 @@
 import { FC, useEffect, useState } from 'react';
 import { LogoMark } from 'ui';
-import { motion, useAnimationControls } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
 import { MdOutlineMenu, MdOutlineClose, MdLaunch } from 'react-icons/md';
 import { useRouter } from 'next/router';
-import {
-	mobileMenuContainer,
-	mobileMenuList,
-	mobileMenuItem,
-	mobileHamburger,
-} from './navbar.variants';
+
+const mobileMenuContainer: Variants = {
+	in: {
+		opacity: 1,
+		x: 0,
+		transition: {
+			duration: 0.25,
+		},
+	},
+	out: {
+		opacity: 0,
+		x: -100,
+		transition: {
+			duration: 0.25,
+			when: 'afterChildren',
+		},
+	},
+};
+const mobileMenuList: Variants = {
+	in: {
+		pointerEvents: 'auto',
+		transition: {
+			staggerChildren: 0.1,
+			delayChildren: 0.25,
+		},
+	},
+	out: {
+		pointerEvents: 'none',
+		transition: {
+			staggerChildren: 0.1,
+			staggerDirection: -1,
+		},
+	},
+};
+const mobileMenuItem: Variants = {
+	init: {
+		x: -100,
+		opacity: 0,
+	},
+	in: {
+		x: 0,
+		opacity: 1,
+		transition: {
+			x: { stiffness: 1000, velocity: -100 },
+		},
+	},
+	out: {
+		x: -100,
+		opacity: 0,
+		transition: {
+			x: { stiffness: 1000 },
+		},
+	},
+};
+
+const mobileHamburger: Variants = {
+	init: {
+		opacity: 0,
+		rotate: 180,
+	},
+	in: {
+		opacity: 1,
+		rotate: 0,
+		transition: {
+			duration: 0.5,
+			easings: 'easeInOut',
+		},
+	},
+	out: {
+		opacity: 0,
+		rotate: 180,
+		transition: {
+			duration: 0.5,
+			easings: 'easeInOut',
+		},
+	},
+};
 
 const menuLinks = [
 	{
@@ -127,10 +198,6 @@ const Navbar: FC = () => {
 			{/* Mobile menu */}
 			<motion.div
 				className={`fixed z-[999] flex h-screen w-screen flex-col items-start justify-center bg-mbaharip-dark md:hidden`}
-				// initial={{
-				// 	opacity: 0,
-				// 	x: -100,
-				// }}
 				animate={isMenuOpen ? 'in' : 'out'}
 				variants={mobileMenuContainer}
 				key={'mobile-menu-container'}

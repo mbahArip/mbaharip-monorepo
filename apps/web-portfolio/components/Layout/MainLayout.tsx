@@ -1,10 +1,10 @@
 import { FC, ReactNode } from 'react';
 import Footer from '../Shared/Footer';
 import Navbar from '../Shared/Navbar';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import useDeviceType from '../../hooks/useDeviceType';
 
-const variants = {
+const variants:Variants = {
 	init: { opacity: 0, x: 0, y: 20 },
 	in: { opacity: 1, x: 0, y: 0 },
 	out: { opacity: 0, x: -0, y: 20 },

@@ -1,6 +1,46 @@
 import { FC, ReactNode } from 'react';
-import { motion } from 'framer-motion';
-import { decorationVariants, textVariants } from './sectionHeader.variants';
+import { motion, Variants } from 'framer-motion';
+
+const decorationVariants: Variants = {
+	init: {
+		height: 0,
+	},
+	in: {
+		height: '2.25rem',
+		transition: {
+			duration: 0.5,
+			ease: 'easeInOut',
+			delay: 0.75,
+		},
+	},
+	out: {
+		height: 0,
+		transition: {
+			duration: 0.25,
+			ease: 'easeInOut',
+			delay: 0.25,
+		},
+	},
+};
+
+const textVariants: Variants = {
+	init: {
+		x: '-150%',
+	},
+	in: {
+		x: 0,
+		transition: {
+			duration: 0.5,
+			delay: 1,
+		},
+	},
+	out: {
+		x: '-150%',
+		transition: {
+			duration: 0.25,
+		},
+	},
+};
 
 type BlogHeaderProps = {
 	useDecoration?: boolean;
