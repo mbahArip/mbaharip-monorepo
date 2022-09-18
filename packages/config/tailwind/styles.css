@@ -29,7 +29,9 @@
  * Animation
  */
 @import './animation/logo.css';
+/**
 @import './animation/preloader.css';
+*/
 
 /**
  * Extend
