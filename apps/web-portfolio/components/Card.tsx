@@ -1,9 +1,7 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { FC, Fragment } from 'react';
 import { Button } from 'ui';
 import useDeviceType from '../hooks/useDeviceType';
-import { remToPx } from '../utils/calculateImageSize';
 import { capitalize } from '../utils/capitalize';
 import { formatDate } from '../utils/formatDate';
 import Img from './Shared/Img';
@@ -49,7 +47,7 @@ const Card: FC<CardProps> = ({ data, type }) => {
 			>
 				<div>
 					<Img
-						src={'https://picsum.photos/500/500'}
+						src={data.thumbnail}
 						alt={data.title}
 						className='h-28 w-28 object-cover opacity-75 transition group-hover:opacity-100'
 						aspectRatio='square'
@@ -77,26 +75,24 @@ const Card: FC<CardProps> = ({ data, type }) => {
 					{data.summary}
 				</p>
 				<div className='flex gap-1'>
-					{data.tags.map((tag, index) => {
-						return (
-							<Fragment key={tag}>
-								{index < (isDesktop ? 3 : 2) && (
-									<Link
-										href={`/tags/${tag}`}
-										passHref
-										prefetch={false}
+					{data.tags.map((tag, index) => (
+						<Fragment key={tag}>
+							{index < (isDesktop ? 3 : 2) && (
+								<Link
+									href={`/tags/${tag}`}
+									passHref
+									prefetch={false}
+								>
+									<Button
+										size='xs'
+										variant='outline'
 									>
-										<Button
-											size='xs'
-											variant='outline'
-										>
-											{tag}
-										</Button>
-									</Link>
-								)}
-							</Fragment>
-						);
-					})}
+										{tag}
+									</Button>
+								</Link>
+							)}
+						</Fragment>
+					))}
 				</div>
 			</div>
 		</div>

@@ -1,14 +1,12 @@
 import type { NextPage } from 'next';
-import Navbar from '../components/Shared/Navbar';
-import { NextSeo } from 'next-seo';
+import Link from 'next/link';
+import { Button } from 'ui';
 import MainLayout from '../components/Layout/MainLayout';
 import HeaderLayout from '../components/Layout/HeaderLayout';
 import ContentLayout from '../components/Layout/ContentLayout';
 import SectionLayout from '../components/Layout/SectionLayout';
 import SectionHeader from '../components/Typography/SectionHeader';
 import Img from '../components/Shared/Img';
-import Link from 'next/link';
-import { Button } from 'ui';
 import useDeviceType from '../hooks/useDeviceType';
 
 const Home: NextPage = () => {
@@ -36,11 +34,13 @@ const Home: NextPage = () => {
 										Interested in web development, V stuff, and 3D modeling
 										especially about cars.
 									</p>
-									<Link href={'/about'}>
+									<Link href='/about'>
 										<Button
 											className='my-2 flex items-center'
 											size={isDesktop ? 'md' : 'md'}
-										></Button>
+										>
+											Lorem
+										</Button>
 									</Link>
 								</div>
 							</div>

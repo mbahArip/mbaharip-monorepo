@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosError } from 'axios';
 import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -32,6 +32,7 @@ const loadingVariants: Variants = {
 type LatestPostProps = {
 	title: string;
 	postsLoading: boolean;
+	postsError: AxiosError | any;
 	postsData: AxiosResponse;
 	postType: 'blog' | 'work';
 };
@@ -39,6 +40,7 @@ type LatestPostProps = {
 const LatestPost: FC<LatestPostProps> = ({
 	title,
 	postsLoading,
+	postsError,
 	postsData,
 	postType,
 }) => {
@@ -63,9 +65,9 @@ const LatestPost: FC<LatestPostProps> = ({
 			<div className='my-4 flex w-full flex-col flex-wrap items-center justify-center gap-y-4 px-4 md:flex-row md:px-16'>
 				{postsLoading ? (
 					<motion.div
-						initial={'init'}
-						animate={'in'}
-						exit={'out'}
+						initial='init'
+						animate='in'
+						exit='out'
 						variants={loadingVariants}
 					>
 						<LogoMark
@@ -92,7 +94,15 @@ const LatestPost: FC<LatestPostProps> = ({
 								))}
 							</>
 						) : (
-							<h2 className='my-4 text-lg'>There are no posts found.</h2>
+							<>
+								{postsError ? (
+									<h2 className='my-4 text-lg text-red-500'>
+										Fetch post failed.
+									</h2>
+								) : (
+									<h2 className='my-4 text-lg'>There are no posts found.</h2>
+								)}
+							</>
 						)}
 					</>
 				)}

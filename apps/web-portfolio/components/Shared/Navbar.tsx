@@ -132,16 +132,17 @@ const Navbar: FC = () => {
 					/>
 					<div
 						className='aspect-square relative right-4 grid place-items-center rounded'
-						onClick={() => {
+						onClick={(e) => {
+							e.preventDefault();
 							setIsMenuOpen(!isMenuOpen);
 						}}
 					>
 						<motion.div
-							initial={'initOut'}
+							initial='initOut'
 							animate={isMenuOpen ? 'out' : 'in'}
 							variants={mobileHamburger}
 							className='absolute'
-							key={'menu-open'}
+							key='menu-open'
 						>
 							<MdOutlineMenu
 								className='text-mbaharip-light'
@@ -150,11 +151,11 @@ const Navbar: FC = () => {
 						</motion.div>
 
 						<motion.div
-							initial={'initIn'}
+							initial='initIn'
 							animate={isMenuOpen ? 'in' : 'out'}
 							variants={mobileHamburger}
 							className='absolute'
-							key={'menu-close'}
+							key='menu-close'
 						>
 							<MdOutlineClose
 								className='text-mbaharip-light'
@@ -166,7 +167,7 @@ const Navbar: FC = () => {
 				{/* Desktop */}
 				<div className='mx-auto hidden w-full max-w-screen-xl items-center justify-between md:flex'>
 					<Link
-						href={'/'}
+						href='/'
 						passHref
 					>
 						<div>
@@ -201,47 +202,45 @@ const Navbar: FC = () => {
 
 			{/* Mobile menu */}
 			<motion.div
-				className={`fixed z-[999] flex h-screen w-screen flex-col items-start justify-center bg-mbaharip-dark md:hidden`}
-				initial={'init'}
+				className='fixed z-[999] flex h-screen w-screen flex-col items-start justify-center bg-mbaharip-dark md:hidden'
+				initial='init'
 				animate={isMenuOpen ? 'in' : 'out'}
 				variants={mobileMenuContainer}
-				key={'mobile-menu-container'}
+				key='mobile-menu-container'
 			>
 				<motion.ul
 					variants={mobileMenuList}
-					key={'mobile-menu-list'}
+					key='mobile-menu-list'
 				>
-					{menuLinks.map((link, index) => {
-						return (
-							<Link
-								href={link.url}
-								key={`${index}`}
+					{menuLinks.map((link, index) => (
+						<Link
+							href={link.url}
+							key={`${index}`}
+						>
+							<motion.li
+								key={`mobile-menu-item-${index}`}
+								className='my-8'
+								variants={mobileMenuItem}
+								onClick={() => {
+									if (router.pathname === link.url) {
+										setIsMenuOpen(false);
+									}
+								}}
 							>
-								<motion.li
-									key={`mobile-menu-item-${index}`}
-									className='my-8'
-									variants={mobileMenuItem}
-									onClick={() => {
-										if (router.pathname === link.url) {
-											setIsMenuOpen(false);
-										}
-									}}
+								<a
+									className={`flex w-screen items-center gap-1 px-16 text-3xl ${
+										router.pathname === link.url
+											? 'font-bold text-mbaharip-primary'
+											: 'font-normal text-mbaharip-light'
+									}`}
+									target={link.external ? '_blank' : ''}
 								>
-									<a
-										className={`flex w-screen items-center gap-1 px-16 text-3xl ${
-											router.pathname === link.url
-												? 'font-bold text-mbaharip-primary'
-												: 'font-normal text-mbaharip-light'
-										}`}
-										target={link.external ? '_blank' : ''}
-									>
-										{link.external && <MdLaunch size={16} />}
-										{link.name}
-									</a>
-								</motion.li>
-							</Link>
-						);
-					})}
+									{link.external && <MdLaunch size={16} />}
+									{link.name}
+								</a>
+							</motion.li>
+						</Link>
+					))}
 				</motion.ul>
 			</motion.div>
 		</>

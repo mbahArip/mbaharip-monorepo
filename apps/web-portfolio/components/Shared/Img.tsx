@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, forwardRef } from 'react';
+import { useEffect, useState, forwardRef } from 'react';
 import { LogoMark } from 'ui';
 
 type ImgProps = {
@@ -13,19 +13,16 @@ type ImgProps = {
 };
 
 const Img = forwardRef<HTMLDivElement, ImgProps>(
-	(
-		{
-			src,
-			alt,
-			className,
-			rounded,
-			aspectRatio,
-			useCredits = false,
-			credits = '',
-			lazyLoad = undefined,
-		},
-		ref,
-	) => {
+	({
+		src,
+		alt,
+		className = '',
+		rounded = false,
+		aspectRatio = 'auto',
+		useCredits = false,
+		credits = '',
+		lazyLoad = undefined,
+	}) => {
 		const [imgSrc, setImgSrc] = useState('');
 		const [isLoading, setIsLoading] = useState(true);
 
@@ -80,5 +77,14 @@ const Img = forwardRef<HTMLDivElement, ImgProps>(
 		);
 	},
 );
+
+Img.defaultProps = {
+	className: '',
+	rounded: false,
+	aspectRatio: 'auto',
+	useCredits: false,
+	credits: '',
+	lazyLoad: undefined,
+};
 
 export default Img;

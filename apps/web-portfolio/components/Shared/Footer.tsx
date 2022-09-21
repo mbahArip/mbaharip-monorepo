@@ -41,11 +41,11 @@ const Footer: FC = () => {
 							<Link
 								key={contact.name}
 								href={contact.link}
-								passHref
 							>
 								<a
 									className='flex items-center gap-1'
-									target={'_blank'}
+									target='_blank'
+									rel='noreferrer'
 								>
 									{contact.icon}
 									{contact.name}
@@ -55,7 +55,8 @@ const Footer: FC = () => {
 					</div>
 					<a
 						href='https://links.mbaharip.me/'
-						target={'_blank'}
+						target='_blank'
+						rel='noreferrer'
 					>
 						More links
 					</a>

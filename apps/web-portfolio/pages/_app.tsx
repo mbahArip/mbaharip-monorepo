@@ -8,7 +8,6 @@ import { AnimatePresence, MotionConfig } from 'framer-motion';
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const router = useRouter();
-	const { pathname } = router;
 
 	// Handle route change start
 	const [routeChange, setRouteChange] = useState({
@@ -17,15 +16,17 @@ const App = ({ Component, pageProps }: AppProps) => {
 	});
 	useEffect(() => {
 		const handleRouteChangeStart = () => {
-			setRouteChange({
-				...routeChange,
+			setRouteChange(() => ({
 				isRouteChanging: true,
 				loadingKey: routeChange.loadingKey ^ 1,
-			});
+			}));
 		};
 
 		const handleRouteChangeEnd = () => {
-			setRouteChange({ ...routeChange, isRouteChanging: false });
+			setRouteChange((r) => ({
+				isRouteChanging: false,
+				loadingKey: r.loadingKey,
+			}));
 		};
 
 		router.events.on('routeChangeStart', handleRouteChangeStart);
@@ -37,6 +38,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 			router.events.off('routeChangeComplete', handleRouteChangeEnd);
 			router.events.off('routeChangeError', handleRouteChangeEnd);
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router.events]);
 
 	return (

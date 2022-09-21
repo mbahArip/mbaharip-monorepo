@@ -5,7 +5,7 @@ export const formatDate = (
 ) => {
 	const d = new Date(date);
 
-	const formatOptions = {};
+	const formatOptions: Intl.DateTimeFormatOptions = {};
 	if (includeHours) {
 		formatOptions['hour'] = 'numeric';
 		formatOptions['minute'] = 'numeric';

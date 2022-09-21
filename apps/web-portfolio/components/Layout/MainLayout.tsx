@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
+import { motion, Variants } from 'framer-motion';
 import Footer from '../Shared/Footer';
 import Navbar from '../Shared/Navbar';
-import { motion, Variants } from 'framer-motion';
 import useDeviceType from '../../hooks/useDeviceType';
 
 const variants: Variants = {

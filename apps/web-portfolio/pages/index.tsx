@@ -1,26 +1,21 @@
 import type { NextPage } from 'next';
+import Link from 'next/link';
 import { LogoText, Button } from 'ui';
 import { MdChevronRight } from 'react-icons/md';
-import useFetch from '../hooks/useFetch';
-import Link from 'next/link';
-import useDeviceType from '../hooks/useDeviceType';
 import SectionHeader from '../components/Typography/SectionHeader';
 import Img from '../components/Shared/Img';
 import LatestPost from '../components/Layout/LatestPost';
 import MainLayout from '../components/Layout/MainLayout';
 import HeaderLayout from '../components/Layout/HeaderLayout';
 import SectionLayout from '../components/Layout/SectionLayout';
-import { useState } from 'react';
 import ContentLayout from '../components/Layout/ContentLayout';
+import useFetch from '../hooks/useFetch';
 
 const Home: NextPage = () => {
-	const [logoAnimationFinished, setLogoAnimationFinished] = useState(false);
-
-	const { deviceType, isDesktop } = useDeviceType();
 	const postLimit = 2;
 	const {
 		isLoading: isBlogsLoading,
-		error: blogsError,
+		error: isBlogsError,
 		response: blogsResponse,
 	} = useFetch({
 		method: 'GET',
@@ -28,7 +23,7 @@ const Home: NextPage = () => {
 	});
 	const {
 		isLoading: isWorksLoading,
-		error: worksError,
+		error: isWorksError,
 		response: worksResponse,
 	} = useFetch({
 		method: 'GET',
@@ -40,9 +35,9 @@ const Home: NextPage = () => {
 			<HeaderLayout>
 				<div>
 					<LogoText
-						size={'large'}
-						color={'light'}
-						animate={!logoAnimationFinished}
+						size='large'
+						color='light'
+						animate
 					/>
 				</div>
 				<span className='absolute bottom-0 right-4 hidden text-xs'>
@@ -68,7 +63,7 @@ const Home: NextPage = () => {
 									Interested in web development, V stuff, and 3D modeling
 									especially about cars.
 								</p>
-								<Link href={'/about'}>
+								<Link href='/about'>
 									<Button className='my-2 flex items-center'>
 										Learn more <MdChevronRight />
 									</Button>
@@ -83,7 +78,7 @@ const Home: NextPage = () => {
 								<p className='max-w-screen-sm text-center md:text-end'>
 									Mascot of mbaharip::projects.
 								</p>
-								<Link href={'/about'}>
+								<Link href='/about'>
 									<Button className='my-2 flex items-center'>
 										Learn more <MdChevronRight />
 									</Button>
@@ -104,6 +99,7 @@ const Home: NextPage = () => {
 					<LatestPost
 						title='Latest blogs'
 						postsLoading={isBlogsLoading}
+						postsError={isBlogsError}
 						postsData={blogsResponse!}
 						postType='blog'
 					/>
@@ -112,6 +108,7 @@ const Home: NextPage = () => {
 					<LatestPost
 						title='Latest projects'
 						postsLoading={isWorksLoading}
+						postsError={isWorksError}
 						postsData={worksResponse!}
 						postType='work'
 					/>
