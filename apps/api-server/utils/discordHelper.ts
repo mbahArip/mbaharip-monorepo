@@ -35,7 +35,7 @@ type Embeds = {
 };
 
 const postToDiscord = async (
-	channel: 'gumroad' | 'web' | 'promo' | 'scheduler' | 'test',
+	channel: 'gumroadPing' | 'webUpdate' | 'promoCode' | 'scheduler' | 'test',
 	content: string = '',
 	useEmbed: boolean = false,
 	embeds?: Embeds,
@@ -60,17 +60,17 @@ const postToDiscord = async (
 	if (useEmbed) {
 		dataPayload.embeds = [
 			{
-				title: embeds.title,
-				description: embeds.description,
+				title: embeds!.title,
+				description: embeds!.description,
 				color: 15357964,
-				fields: embeds.fields,
-				timestamp: embeds.timestamp.toISOString(),
-				footer: { text: embeds.footerText },
+				fields: embeds!.fields,
+				timestamp: embeds!.timestamp.toISOString(),
+				footer: { text: embeds!.footerText },
 			},
 		];
 
-		if (embeds.imageUrl) {
-			dataPayload.embeds[0].image = { url: embeds.imageUrl };
+		if (embeds!.imageUrl) {
+			dataPayload.embeds[0].image = { url: embeds!.imageUrl };
 		}
 	}
 
