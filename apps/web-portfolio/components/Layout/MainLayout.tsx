@@ -26,9 +26,9 @@ const MainLayout: FC<MainLayoutProps> = ({ children }) => {
 				exit='out'
 				variants={variants}
 				transition={{
-					duration: 0.4,
+					duration: 0.5,
 					ease: 'easeInOut',
-					delay: isDesktop ? 0.5 : 0,
+					delay: isDesktop ? 0.25 : 0,
 				}}
 				style={{ position: 'relative' }}
 			>

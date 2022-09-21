@@ -22,4 +22,7 @@ module.exports = withTM({
 				: null,
 		].filter(Boolean);
 	},
+	images: {
+		domains: ['picsum.photos'],
+	},
 });

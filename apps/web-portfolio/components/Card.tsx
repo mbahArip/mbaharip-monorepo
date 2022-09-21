@@ -1,7 +1,9 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { FC, Fragment } from 'react';
 import { Button } from 'ui';
 import useDeviceType from '../hooks/useDeviceType';
+import { remToPx } from '../utils/calculateImageSize';
 import { capitalize } from '../utils/capitalize';
 import { formatDate } from '../utils/formatDate';
 import Img from './Shared/Img';
@@ -54,18 +56,20 @@ const Card: FC<CardProps> = ({ data, type }) => {
 					/>
 				</div>
 			</Link>
-			<div className='mx-auto flex w-3/4 flex-shrink flex-col justify-between py-1 px-2'>
+			<div className='mx-auto flex w-3/4 flex-1 flex-col justify-between py-1 px-2'>
 				<div className='flex items-center justify-between'>
 					<Link
 						href={`/${type}/${data.id}`}
 						passHref
 						prefetch={false}
 					>
-						<h1 className='m-0 w-auto text-lg line-clamp-1'>
-							{capitalize(data.title)}
-						</h1>
+						<a>
+							<h1 className='m-0 w-auto flex-shrink text-lg line-clamp-1'>
+								{capitalize(data.title)}
+							</h1>
+						</a>
 					</Link>
-					<span className='hidden text-xs md:block'>
+					<span className='hidden flex-grow whitespace-nowrap text-end text-xs md:block'>
 						{formatDate(data.modifiedAt as Date, false, true)}
 					</span>
 				</div>

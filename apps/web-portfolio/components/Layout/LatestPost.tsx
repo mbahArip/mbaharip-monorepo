@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
 import { FC } from 'react';
 import { Button, LogoMark } from 'ui';
@@ -6,6 +7,27 @@ import useDeviceType from '../../hooks/useDeviceType';
 import Card from '../Card';
 import SectionHeader from '../Typography/SectionHeader';
 import SectionLayout from './SectionLayout';
+
+const loadingVariants: Variants = {
+	init: {
+		opacity: 0,
+	},
+	in: {
+		opacity: 1,
+		transition: {
+			duration: 0.5,
+			ease: 'easeInOut',
+			delay: 1,
+		},
+	},
+	out: {
+		opacity: 0,
+		transition: {
+			duration: 0.5,
+			ease: 'easeInOut',
+		},
+	},
+};
 
 type LatestPostProps = {
 	title: string;
@@ -38,13 +60,20 @@ const LatestPost: FC<LatestPostProps> = ({
 					</Button>
 				</Link>
 			</div>
-			<div className='my-4 flex w-full flex-col flex-wrap items-start justify-center gap-y-4 px-4 md:flex-row md:px-16'>
+			<div className='my-4 flex w-full flex-col flex-wrap items-center justify-center gap-y-4 px-4 md:flex-row md:px-16'>
 				{postsLoading ? (
-					<LogoMark
-						size='small'
-						color='light'
-						animate
-					/>
+					<motion.div
+						initial={'init'}
+						animate={'in'}
+						exit={'out'}
+						variants={loadingVariants}
+					>
+						<LogoMark
+							size='small'
+							color='light'
+							animate
+						/>
+					</motion.div>
 				) : (
 					<>
 						{postsData?.data?.data?.length > 0 ? (

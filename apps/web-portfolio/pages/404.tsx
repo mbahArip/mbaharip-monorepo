@@ -36,7 +36,7 @@ const NotFound: NextPage = () => {
 					is not found on the server.
 				</span>
 				<div className='my-8 flex flex-col gap-4 md:my-4 md:flex-row md:gap-2'>
-					<Link href={'/'}>
+					<Link href='/'>
 						<Button>Back to home</Button>
 					</Link>
 					<Button

@@ -10,8 +10,12 @@ import LatestPost from '../components/Layout/LatestPost';
 import MainLayout from '../components/Layout/MainLayout';
 import HeaderLayout from '../components/Layout/HeaderLayout';
 import SectionLayout from '../components/Layout/SectionLayout';
+import { useState } from 'react';
+import ContentLayout from '../components/Layout/ContentLayout';
 
 const Home: NextPage = () => {
+	const [logoAnimationFinished, setLogoAnimationFinished] = useState(false);
+
 	const { deviceType, isDesktop } = useDeviceType();
 	const postLimit = 2;
 	const {
@@ -34,20 +38,22 @@ const Home: NextPage = () => {
 	return (
 		<MainLayout>
 			<HeaderLayout>
-				<LogoText
-					size={'large'}
-					color={'light'}
-					animate={true}
-				/>
+				<div>
+					<LogoText
+						size={'large'}
+						color={'light'}
+						animate={!logoAnimationFinished}
+					/>
+				</div>
 				<span className='absolute bottom-0 right-4 hidden text-xs'>
 					Logo by @RINYA_P
 				</span>
 			</HeaderLayout>
-			<SectionLayout delay={0.5}>
-				<div>
-					<SectionHeader useDecoration>About me</SectionHeader>
+			<ContentLayout>
+				<SectionHeader useDecoration>About</SectionHeader>
+				<div className='md:px-12'>
 					<SectionLayout delay={0.25}>
-						<div className='my-4 flex flex-col items-center justify-center md:flex-row md:gap-8'>
+						<div className='my-4 flex w-full flex-col items-center justify-start md:flex-row md:gap-8'>
 							<Img
 								src='/images/me.webp'
 								className='h-24 w-24 outline outline-mbaharip-light md:h-32 md:w-32'
@@ -56,17 +62,14 @@ const Home: NextPage = () => {
 							/>
 							<div className='mt-8 mb-0 flex flex-col items-center md:my-2 md:items-start'>
 								<h1 className='md:text-4xl'>Arief Rachmawan</h1>
-								<p className='max-w-screen-sm px-8 text-center md:px-0 md:text-start'>
+								<p className='max-w-screen-sm text-center md:text-start'>
 									Currently student at Sekolah Tinggi Teknologi Bandung.
 									<br />
 									Interested in web development, V stuff, and 3D modeling
 									especially about cars.
 								</p>
 								<Link href={'/about'}>
-									<Button
-										className='my-2 flex items-center'
-										size={isDesktop ? 'md' : 'md'}
-									>
+									<Button className='my-2 flex items-center'>
 										Learn more <MdChevronRight />
 									</Button>
 								</Link>
@@ -74,7 +77,18 @@ const Home: NextPage = () => {
 						</div>
 					</SectionLayout>
 					<SectionLayout delay={0.5}>
-						<div className='my-4 hidden flex-col items-center justify-center md:flex-row-reverse md:gap-8'>
+						<div className='my-4 flex w-full flex-col-reverse items-center justify-end md:flex-row md:gap-8'>
+							<div className='mt-8 mb-0 flex flex-col items-center md:my-2 md:items-end'>
+								<h1 className='md:text-4xl'>花夢／Kanon</h1>
+								<p className='max-w-screen-sm text-center md:text-end'>
+									Mascot of mbaharip::projects.
+								</p>
+								<Link href={'/about'}>
+									<Button className='my-2 flex items-center'>
+										Learn more <MdChevronRight />
+									</Button>
+								</Link>
+							</div>
 							<Img
 								src='/images/kanon/kanon-avatar.webp'
 								className='h-24 w-24 outline outline-mbaharip-light md:h-32 md:w-32'
@@ -83,43 +97,26 @@ const Home: NextPage = () => {
 								useCredits
 								credits='Illustrated by @ranceia'
 							/>
-							<div className='mt-8 mb-0 flex flex-col items-center md:my-2 md:items-start'>
-								<h1 className='md:text-5xl'>花夢／Kanon</h1>
-								<p className='max-w-screen-sm px-8 text-center md:px-0 md:text-start'>
-									Currently student at Sekolah Tinggi Teknologi Bandung.
-									<br />
-									Interested in web development, V stuff, and 3D modeling
-									especially about cars.
-								</p>
-								<Link href={'/about'}>
-									<Button
-										className='my-2 flex items-center'
-										size={isDesktop ? 'md' : 'md'}
-									>
-										Learn more <MdChevronRight />
-									</Button>
-								</Link>
-							</div>
 						</div>
 					</SectionLayout>
 				</div>
-				<SectionLayout delay={0.25}>
+				<SectionLayout delay={0.75}>
 					<LatestPost
 						title='Latest blogs'
 						postsLoading={isBlogsLoading}
-						postsData={blogsResponse}
+						postsData={blogsResponse!}
 						postType='blog'
 					/>
 				</SectionLayout>
-				<SectionLayout delay={0.5}>
+				<SectionLayout delay={1}>
 					<LatestPost
 						title='Latest projects'
 						postsLoading={isWorksLoading}
-						postsData={worksResponse}
+						postsData={worksResponse!}
 						postType='work'
 					/>
 				</SectionLayout>
-			</SectionLayout>
+			</ContentLayout>
 		</MainLayout>
 	);
 };

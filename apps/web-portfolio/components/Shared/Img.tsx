@@ -9,6 +9,7 @@ type ImgProps = {
 	aspectRatio?: 'auto' | 'square' | 'landscape' | 'portrait';
 	useCredits?: boolean;
 	credits?: string;
+	lazyLoad?: 'eager' | 'lazy' | undefined;
 };
 
 const Img = forwardRef<HTMLDivElement, ImgProps>(
@@ -21,6 +22,7 @@ const Img = forwardRef<HTMLDivElement, ImgProps>(
 			aspectRatio,
 			useCredits = false,
 			credits = '',
+			lazyLoad = undefined,
 		},
 		ref,
 	) => {
@@ -47,7 +49,7 @@ const Img = forwardRef<HTMLDivElement, ImgProps>(
 						className={`${className} ${
 							rounded ? 'rounded-full' : 'rounded-lg'
 						} ${
-							aspectValue[aspectRatio]
+							aspectValue[aspectRatio!]
 						} m-4 grid animate-pulse place-items-center bg-mbaharip-light/10`}
 					>
 						<LogoMark size='small' />
@@ -59,10 +61,11 @@ const Img = forwardRef<HTMLDivElement, ImgProps>(
 							alt={alt}
 							className={`${className} ${
 								rounded ? 'rounded-full' : 'rounded-lg'
-							} ${aspectRatio && aspectValue[aspectRatio]} object-cover`}
+							} ${aspectRatio && aspectValue[aspectRatio!]} object-cover`}
 							onError={() => {
 								setImgSrc('/images/illust/404.png');
 							}}
+							loading={lazyLoad}
 						/>
 						<span
 							className={`absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[0.625rem] ${

@@ -16,7 +16,7 @@ const decorationVariants: Variants = {
 	out: {
 		height: 0,
 		transition: {
-			duration: 0.25,
+			duration: 0.5,
 			ease: 'easeInOut',
 			delay: 0.25,
 		},
@@ -37,7 +37,7 @@ const textVariants: Variants = {
 	out: {
 		x: '-150%',
 		transition: {
-			duration: 0.25,
+			duration: 0.5,
 		},
 	},
 };
@@ -52,7 +52,7 @@ const SectionHeader: FC<BlogHeaderProps> = ({
 	children,
 }) => {
 	return (
-		<div className='flex items-center px-4'>
+		<div className='flex items-center'>
 			{useDecoration && (
 				<motion.div
 					className='w-2 bg-mbaharip-primary'

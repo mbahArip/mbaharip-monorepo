@@ -83,8 +83,8 @@ const App = ({ Component, pageProps }: AppProps) => {
 			/>
 			<MotionConfig reducedMotion='user'>
 				<AnimatePresence
-					exitBeforeEnter
-					// mode='sync'
+					// exitBeforeEnter
+					mode='wait'
 					// initial={true}
 					onExitComplete={() => {
 						if (typeof window !== 'undefined') {

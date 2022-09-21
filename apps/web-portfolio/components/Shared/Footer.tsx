@@ -53,6 +53,12 @@ const Footer: FC = () => {
 							</Link>
 						))}
 					</div>
+					<a
+						href='https://links.mbaharip.me/'
+						target={'_blank'}
+					>
+						More links
+					</a>
 				</div>
 			</div>
 			<span className='mt-4'>
