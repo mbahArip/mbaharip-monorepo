@@ -19,7 +19,7 @@ const useFetch = (axiosParams: AxiosRequestConfig) => {
 				...params,
 			});
 			setResponse(result);
-		} catch (error) {
+		} catch (error: AxiosError | Error | any) {
 			setError(error);
 		} finally {
 			setIsLoading(false);
