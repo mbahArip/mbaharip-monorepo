@@ -1,8 +1,8 @@
-import { FC, ReactNode } from 'react';
 import { motion, Variants } from 'framer-motion';
+import { FC, ReactNode } from 'react';
+import useDeviceType from '../../hooks/useDeviceType';
 import Footer from '../Shared/Footer';
 import Navbar from '../Shared/Navbar';
-import useDeviceType from '../../hooks/useDeviceType';
 
 const variants: Variants = {
 	init: { opacity: 0, x: 0, y: 20 },

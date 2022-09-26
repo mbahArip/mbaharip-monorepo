@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 const useDeviceType = () => {
 	const [deviceType, setDeviceType] = useState<'mobile' | 'desktop'>('desktop');
 
 	useEffect(() => {
-		var isMobile = navigator.userAgent.match(
+		const isMobile = navigator.userAgent.match(
 			/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i,
 		);
 		if (isMobile) {

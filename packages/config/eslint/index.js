@@ -23,6 +23,7 @@ module.exports = {
 		'react/jsx-key': 'off',
 		'react/jsx-no-useless-fragment': 'off',
 		'react/no-array-index-key': 'off',
+		'react/button-has-type': 'off',
 		'no-bitwise': 'off',
 		'no-plusplus': ['error', {allowForLoopAfterthoughts: true}],
 		'no-console': 'warn',
@@ -38,6 +39,7 @@ module.exports = {
 	},
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
-		project: './tsconfig.json',
+		project: ['./apps/**/tsconfig.json', './packages/ui/tsconfig.json'],
+		tsconfigRootDir: undefined,
 	},
 };

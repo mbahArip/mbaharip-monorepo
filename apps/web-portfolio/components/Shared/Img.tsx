@@ -1,4 +1,4 @@
-import { useEffect, useState, forwardRef } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { LogoMark } from 'ui';
 
 type ImgProps = {
@@ -13,16 +13,19 @@ type ImgProps = {
 };
 
 const Img = forwardRef<HTMLDivElement, ImgProps>(
-	({
-		src,
-		alt,
-		className = '',
-		rounded = false,
-		aspectRatio = 'auto',
-		useCredits = false,
-		credits = '',
-		lazyLoad = undefined,
-	}) => {
+	(
+		{
+			src,
+			alt,
+			className = '',
+			rounded = false,
+			aspectRatio = 'auto',
+			useCredits = false,
+			credits = '',
+			lazyLoad = undefined,
+		},
+		ref,
+	) => {
 		const [imgSrc, setImgSrc] = useState('');
 		const [isLoading, setIsLoading] = useState(true);
 
@@ -52,7 +55,10 @@ const Img = forwardRef<HTMLDivElement, ImgProps>(
 						<LogoMark size='small' />
 					</div>
 				) : (
-					<div className='relative'>
+					<div
+						className='relative'
+						ref={ref}
+					>
 						<img
 							src={imgSrc}
 							alt={alt}

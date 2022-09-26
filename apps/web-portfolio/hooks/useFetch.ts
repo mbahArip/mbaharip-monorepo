@@ -1,12 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 
-interface FetchOptions {
-	isLoading: any;
-	isError: any;
-	response: any;
-}
-
 const useFetch = (axiosParams: AxiosRequestConfig) => {
 	const [response, setResponse] = useState<AxiosResponse>();
 	const [error, setError] = useState<AxiosError>();
@@ -15,12 +9,15 @@ const useFetch = (axiosParams: AxiosRequestConfig) => {
 	const fetchData = async (params: AxiosRequestConfig) => {
 		try {
 			const result = await axios.request({
-				baseURL: 'https://api.mbaharip.me/v1',
+				baseURL:
+					process.env.NODE_ENV === 'production'
+						? 'https://api.mbaharip.me/v1'
+						: 'http://localhost:8000/v1',
 				...params,
 			});
 			setResponse(result);
-		} catch (error: AxiosError | Error | any) {
-			setError(error);
+		} catch (err: AxiosError | Error | any) {
+			setError(err);
 		} finally {
 			setIsLoading(false);
 		}
@@ -28,6 +25,7 @@ const useFetch = (axiosParams: AxiosRequestConfig) => {
 
 	useEffect(() => {
 		fetchData(axiosParams);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return { response, error, isLoading };

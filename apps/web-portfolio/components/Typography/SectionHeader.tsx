@@ -1,5 +1,6 @@
-import { FC, ReactNode } from 'react';
 import { motion, Variants } from 'framer-motion';
+import { FC, ReactNode } from 'react';
+import { withDash } from '../../utils/replaceSpace';
 
 const decorationVariants: Variants = {
 	init: {
@@ -51,7 +52,10 @@ const SectionHeader: FC<BlogHeaderProps> = ({
 	useDecoration = false,
 	children,
 }) => (
-	<div className='flex items-center'>
+	<div
+		className='flex items-center'
+		id={withDash((children as string).toLowerCase())}
+	>
 		{useDecoration && (
 			<motion.div
 				className='w-2 bg-mbaharip-primary'

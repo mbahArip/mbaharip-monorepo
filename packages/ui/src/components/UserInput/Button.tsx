@@ -1,12 +1,12 @@
-import {FC, ReactNode, forwardRef} from 'react';
+import {forwardRef, ReactNode} from 'react';
 
 type ButtonProps = {
 	size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 	variant?: 'primary' | 'ghost' | 'outline' | 'link';
-	children?: ReactNode;
+	children: ReactNode;
 	className?: string;
 	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-	type?: 'button' | 'submit' | 'reset';
+	type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'];
 	disabled?: boolean;
 };
 
@@ -43,9 +43,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 				type={type}
 				disabled={disabled}
 				onClick={onClick}
+				ref={ref}
 			>
 				{children}
 			</button>
 		);
 	},
 );
+
+Button.defaultProps = {
+	size: 'md',
+	variant: 'primary',
+	type: 'button',
+	disabled: false,
+	className: '',
+	onClick: () => {},
+};
+export default {Button};

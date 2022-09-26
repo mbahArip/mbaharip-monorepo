@@ -29,15 +29,14 @@
  * Animation
  */
 @import './animation/logo.css';
-/**
-@import './animation/preloader.css';
-*/
 
 /**
  * Extend
  */
 @layer base {
 	/* Global */
+	html {
+	}
 	body {
 		@apply min-h-screen w-screen overflow-x-hidden bg-mbaharip-dark text-mbaharip-light;
 	}
@@ -122,5 +121,17 @@
 		hover:text-mbaharip-primary-hover
 		active:text-mbaharip-primary-active
 		disabled:text-mbaharip-light/50;
+	}
+
+	/* About links */
+	a.about-link {
+		@apply relative z-[1] overflow-hidden px-1 font-bold text-mbaharip-light transition-all duration-300;
+	}
+	a.about-link::before {
+		content: '';
+		@apply absolute top-0 left-0 z-[-1] h-full w-0 -skew-x-12 bg-mbaharip-primary transition-all;
+	}
+	a.about-link:hover::before {
+		@apply w-full;
 	}
 }

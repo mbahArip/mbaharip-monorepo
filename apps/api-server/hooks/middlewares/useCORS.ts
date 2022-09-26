@@ -1,8 +1,12 @@
-import NextCors from 'nextjs-cors';
 import Cors from 'cors';
 import { NextApiRequest, NextApiResponse } from 'next';
+import NextCors from 'nextjs-cors';
 
-const useCORS = async (req: NextApiRequest, res: NextApiResponse, next: any) => {
+const useCORS = async (
+	req: NextApiRequest,
+	res: NextApiResponse,
+	next: any,
+) => {
 	const options: Cors.CorsOptions = {
 		methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
 		origin: '*',

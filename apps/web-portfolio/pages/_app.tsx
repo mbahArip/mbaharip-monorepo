@@ -1,10 +1,10 @@
 import 'config/tailwind/styles.css';
-import type { AppProps } from 'next/app';
+import { AnimatePresence, MotionConfig } from 'framer-motion';
 import { DefaultSeo } from 'next-seo';
-import { LoadingBar } from 'ui';
+import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { AnimatePresence, MotionConfig } from 'framer-motion';
+import { LoadingBar } from 'ui';
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const router = useRouter();
@@ -85,12 +85,10 @@ const App = ({ Component, pageProps }: AppProps) => {
 			/>
 			<MotionConfig reducedMotion='user'>
 				<AnimatePresence
-					// exitBeforeEnter
 					mode='wait'
-					// initial={true}
 					onExitComplete={() => {
 						if (typeof window !== 'undefined') {
-							window.scrollTo({ top: 0 });
+							window.scrollTo(0, 0);
 						}
 					}}
 				>

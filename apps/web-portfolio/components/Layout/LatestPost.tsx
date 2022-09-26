@@ -1,4 +1,4 @@
-import { AxiosResponse, AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
 import { FC } from 'react';
@@ -62,7 +62,7 @@ const LatestPost: FC<LatestPostProps> = ({
 					</Button>
 				</Link>
 			</div>
-			<div className='my-4 flex w-full flex-col flex-wrap items-center justify-center gap-y-4 px-4 md:flex-row md:px-16'>
+			<div className='my-4 flex w-full flex-col flex-wrap items-center justify-center px-4 md:flex-row md:px-16'>
 				{postsLoading ? (
 					<motion.div
 						initial='init'
@@ -82,7 +82,7 @@ const LatestPost: FC<LatestPostProps> = ({
 							<>
 								{postsData.data?.data?.map((post: any, index: number) => (
 									<SectionLayout
-										delay={0.25 * index}
+										order={0}
 										key={index}
 									>
 										<Card

@@ -5,7 +5,7 @@ type ContentLayoutProps = {
 };
 
 const ContentLayout: FC<ContentLayoutProps> = ({ children }) => (
-	<div className='items-between my-4 flex h-full w-full flex-col justify-center gap-4 px-4 md:px-8'>
+	<div className='items-between my-4 flex h-full w-full flex-col justify-center gap-8 px-4 md:px-8'>
 		{children}
 	</div>
 );

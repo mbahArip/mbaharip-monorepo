@@ -1,23 +1,25 @@
-import { FC, useEffect, useState } from 'react';
-import { LogoMark } from 'ui';
 import { motion, Variants } from 'framer-motion';
 import Link from 'next/link';
-import { MdOutlineMenu, MdOutlineClose, MdLaunch } from 'react-icons/md';
 import { useRouter } from 'next/router';
+import { FC, useEffect, useState } from 'react';
+import { MdLaunch, MdOutlineClose, MdOutlineMenu } from 'react-icons/md';
+import { LogoMark } from 'ui';
 
 const mobileMenuContainer: Variants = {
 	in: {
 		opacity: 1,
-		x: 0,
+		// x: 0,
+		translateX: 0,
 		transition: {
-			duration: 0.25,
+			duration: 0.5,
 		},
 	},
 	out: {
 		opacity: 0,
-		x: -100,
+		// x: -100,
+		translateX: '-100%',
 		transition: {
-			duration: 0.25,
+			duration: 0.5,
 			// when: 'afterChildren',
 		},
 	},

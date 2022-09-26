@@ -1,4 +1,3 @@
-import * as React from 'react';
 import type {LogoProps} from '.';
 
 export const LogoText = ({
@@ -6,6 +5,7 @@ export const LogoText = ({
 	color = 'light',
 	animate = false,
 	className = '',
+	onAnimateEnd = () => {},
 }: LogoProps) => {
 	const height = {
 		xsmall: 'h-6 md:h-8',
@@ -99,8 +99,15 @@ export const LogoText = ({
 					className="colorMain"
 					d="M1561,143.8l-36,36v-36l-72,72v288l-36,36v18l108-108v-72h36l72-72v-90L1561,143.8z M1561,287.8l-36,36v-54
 	l36-36V287.8z"
+					onAnimationEnd={(e) => {
+						if (e.animationName === 'textMainLightFill') {
+							onAnimateEnd(e);
+						}
+					}}
 				/>
 			</g>
 		</svg>
 	);
 };
+
+export default {LogoText};

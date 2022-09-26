@@ -3,6 +3,7 @@ export type LogoProps = {
 	color?: 'light' | 'dark';
 	animate?: boolean;
 	className?: string;
+	onAnimateEnd?: (e: any) => void;
 };
 
 export * from './LogoMark';
