@@ -37,6 +37,11 @@ module.exports = {
 			{extensions: ['.js', '.jsx', '.ts', '.tsx']},
 		],
 	},
+	settings: {
+		next: {
+			rootDir: ['apps/*/', 'packages/*/'],
+		},
+	},
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		project: './tsconfig.json',
