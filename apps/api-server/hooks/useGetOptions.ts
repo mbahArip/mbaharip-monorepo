@@ -1,4 +1,4 @@
-import { NextApiResponse, NextApiRequest } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import useResponse from './useResponse';
 
 export type GetOptions = {
@@ -16,22 +16,29 @@ export const getOptions = (req: NextApiRequest) => {
 	const DEFAULT_PAGE = 1;
 
 	const { limit, query, page, itemsPerPage, orderBy, order } = req.query;
-	limit
-		? (options.limit = parseInt(limit as string))
-		: (options.limit = DEFAULT_LIMIT);
-	query && (options.query = query as string);
-	page
-		? (options.page = parseInt(page as string))
-		: limit
-		? (options.page = 1)
-		: (options.page = DEFAULT_PAGE);
-	itemsPerPage
-		? (options.itemsPerPage = parseInt(itemsPerPage as string))
-		: limit
-		? (options.itemsPerPage = options.limit)
-		: (options.itemsPerPage = DEFAULT_LIMIT);
-	orderBy && (options.orderBy = orderBy as string);
-	order && (options.order = order as string);
+
+	if (limit) {
+		options.limit = parseInt(limit as string, 10);
+	} else {
+		options.limit = DEFAULT_LIMIT;
+	}
+	if (query) options.query = query as string;
+	if (page) {
+		options.page = parseInt(page as string, 10);
+	} else if (limit) {
+		options.page = 1;
+	} else {
+		options.page = DEFAULT_PAGE;
+	}
+	if (itemsPerPage) {
+		options.itemsPerPage = parseInt(itemsPerPage as string, 10);
+	} else if (limit) {
+		options.itemsPerPage = options.limit;
+	} else {
+		options.itemsPerPage = DEFAULT_LIMIT;
+	}
+	if (orderBy) options.orderBy = orderBy as string;
+	if (order) options.order = order as string;
 
 	return options;
 };
@@ -74,6 +81,7 @@ export const convertToPrismaOptions = (_options: GetOptions) => {
 				{
 					title: {
 						contains: query,
+						mode: 'insensitive',
 					},
 				},
 				{

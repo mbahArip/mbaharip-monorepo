@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import useResponse from '../../hooks/useResponse';
 import type { GetOptions } from '../../hooks/useGetOptions';
 import {
 	checkOptions,
@@ -9,6 +8,7 @@ import {
 	PaginatedResponse,
 } from '../../hooks/useGetOptions';
 import usePrisma from '../../hooks/usePrisma';
+import useResponse from '../../hooks/useResponse';
 
 const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const METHOD = req.method!.toUpperCase();
@@ -44,13 +44,11 @@ const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 				);
 		} catch (error: any) {
 			if (error.name === 'InvalidPage')
-				return res
-					.status(400)
-					.json(
-						useResponse(400, false, error.message, {
-							...JSON.parse(error.stack),
-						}),
-					);
+				return res.status(400).json(
+					useResponse(400, false, error.message, {
+						...JSON.parse(error.stack),
+					}),
+				);
 
 			return res.status(500).json(
 				useResponse(500, false, 'Fetch blogs failed.', {
@@ -69,13 +67,11 @@ const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 		if (!thumbnail) missingFields.push('thumbnail');
 		if (!tags) missingFields.push('tags');
 		if (missingFields.length > 0)
-			return res
-				.status(400)
-				.json(
-					useResponse(400, false, `Missing required fields.`, {
-						missingFields,
-					}),
-				);
+			return res.status(400).json(
+				useResponse(400, false, `Missing required fields.`, {
+					missingFields,
+				}),
+			);
 
 		try {
 			const databaseResponse = await usePrisma.blogs.create({
@@ -88,26 +84,22 @@ const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 					useResponse(201, true, 'Create blog success.', {}, databaseResponse),
 				);
 		} catch (error: any) {
-			return res
-				.status(500)
-				.json(
-					useResponse(500, false, 'Create blog failed.', {
-						error: error.message,
-					}),
-				);
+			return res.status(500).json(
+				useResponse(500, false, 'Create blog failed.', {
+					error: error.message,
+				}),
+			);
 		}
 	}
 	if (METHOD === 'DELETE') {
 		const { ids } = req.body;
 
 		if (!ids)
-			return res
-				.status(400)
-				.json(
-					useResponse(400, false, 'Missing required fields.', {
-						missingFields: ['ids'],
-					}),
-				);
+			return res.status(400).json(
+				useResponse(400, false, 'Missing required fields.', {
+					missingFields: ['ids'],
+				}),
+			);
 
 		try {
 			const databaseResponse = await usePrisma.blogs.deleteMany({
