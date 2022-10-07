@@ -14,7 +14,7 @@ const newColors = {
 	'mbaharip-secondary-active': 'hsl(219, 90%, 32%)',
 	'mbaharip-secondary-hover': 'hsl(219, 90%, 56%)',
 };
-const heights = ['h-8', 'h-16', 'h-24', 'h-32', 'h-48'];
+const heights = ['h-8', 'h-16', 'h-24', 'h-32', 'h-48', 'h-64', 'h-96'];
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -32,9 +32,10 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
+				bebas: ['"BEBAS NEUE"'],
+				nexus: ['"LOF Nexus 6"'],
 				sans: ['"ORIENTICA"', '"Kosugi"', ...defaultTheme.fontFamily.sans],
 				mono: ['"Fira Code"', ...defaultTheme.fontFamily.mono],
-				nexus: ['"LOF Nexus 6"'],
 				serif: ['"Noto Serif"', '"Zen Antique Soft"'],
 			},
 			fontSize: {

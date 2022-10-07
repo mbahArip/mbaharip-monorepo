@@ -4,7 +4,11 @@ import { LogoMark } from 'ui';
 
 const Maintenance: NextPage = () => (
 	<>
-		<NextSeo title='Maintenance' />
+		<NextSeo
+			title='Maintenance'
+			description='This page is under maintenance'
+			noindex
+		/>
 		<div className='flex h-screen w-screen flex-col items-center justify-center gap-16 bg-mbaharip-dark text-white md:flex-row'>
 			<LogoMark
 				size='large'

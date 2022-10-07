@@ -1,6 +1,6 @@
-import { NextApiResponse, NextApiRequest } from 'next';
+import { verify } from 'jsonwebtoken';
+import { NextApiRequest, NextApiResponse } from 'next';
 import useResponse from '../useResponse';
-import { decrypt } from '../useEncryption';
 
 const useAuthorization = (
 	req: NextApiRequest,
@@ -13,8 +13,9 @@ const useAuthorization = (
 			return res.status(401).json(useResponse(401, false, 'Unauthorized.'));
 		}
 
-		const isApiKeyValid = decrypt(apiKey as string) === process.env.CRYPTO_KEY;
-		if (!isApiKeyValid) {
+		try {
+			verify(apiKey as string, process.env.CRYPTO_KEY as string);
+		} catch (error: any) {
 			return res.status(401).json(useResponse(401, false, 'Invalid API key.'));
 		}
 	}

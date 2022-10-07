@@ -1,20 +1,23 @@
 import { motion } from 'framer-motion';
-import { Dispatch, FC, SetStateAction, useCallback, useEffect } from 'react';
+import {
+	Dispatch,
+	FC,
+	SetStateAction,
+	useCallback,
+	useEffect,
+	useState,
+} from 'react';
 import { MdClose } from 'react-icons/md';
 
 type SearchInputProps = {
-	searchState: {
-		search: string;
-		setSearch: Dispatch<SetStateAction<string>>;
-	};
 	debouncedState: {
 		debouncedSearch: string;
 		setDebouncedSearch: Dispatch<SetStateAction<string>>;
 	};
 };
 
-const SearchInput: FC<SearchInputProps> = ({ searchState, debouncedState }) => {
-	const { search, setSearch } = searchState;
+const SearchInput: FC<SearchInputProps> = ({ debouncedState }) => {
+	const [search, setSearch] = useState('');
 	const { setDebouncedSearch } = debouncedState; // Wait after x Second, then update
 
 	useEffect(() => {

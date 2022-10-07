@@ -128,7 +128,10 @@ const workspaceItems = [
 
 const About: NextPage = () => (
 	<MainLayout>
-		<NextSeo title='About' />
+		<NextSeo
+			title='About'
+			description='About me'
+		/>
 		<HeaderLayout>
 			<div className='relative h-full w-full'>
 				<img
@@ -145,9 +148,9 @@ const About: NextPage = () => (
 				<div className='my-4 flex flex-col items-center justify-center md:flex-row md:gap-8'>
 					<Img
 						src='/images/me.webp'
-						className='h-24 w-24 outline outline-mbaharip-light md:h-32 md:w-32'
+						className='h-24 w-24 md:h-32 md:w-32'
 						alt='Arief Rachmawan'
-						aspectRatio='portrait'
+						aspectRatio='square'
 					/>
 					<div className='mt-8 mb-0 flex flex-col items-center md:my-2 md:items-start'>
 						<h1 className='text-4xl md:text-4xl'>Arief Rachmawan</h1>
@@ -220,61 +223,69 @@ const About: NextPage = () => (
 							src='/images/workspace.webp'
 							alt='Workspace'
 							aspectRatio='landscape'
-							className='mx-auto md:w-3/4'
+							className='mx-auto md:w-full'
 						/>
 						<SectionLayout order={6}>
-							<SectionHeader>PC Specification</SectionHeader>
-							<ul className='flex w-full flex-col items-center text-sm md:text-base'>
-								{pcSpecs.map((spec) => (
-									<li
-										key={spec.name}
-										className='mx-auto flex w-full items-center justify-center'
-									>
-										{typeof spec.value === 'string' ? (
-											<>
-												<span className='w-1/4 font-bold'>{spec.name}</span>
-												<span className='w-3/4 whitespace-nowrap'>
-													{spec.value}
-												</span>
-											</>
-										) : (
-											<div className='flex w-full flex-col'>
-												{spec.value.map((storageValue, index) => (
-													<div
-														className='flex w-full items-center'
-														key={index}
-													>
-														<span
-															className='w-1/4 font-bold'
+							<div className='flex w-full flex-col items-start md:flex-row md:gap-8'>
+								<div className='w-full md:w-2/6'>
+									<SectionHeader>PC Specification</SectionHeader>
+								</div>
+								<ul className='flex w-full flex-col items-center text-sm md:w-4/6 md:text-base'>
+									{pcSpecs.map((spec) => (
+										<li
+											key={spec.name}
+											className='mx-auto flex w-full items-center justify-center'
+										>
+											{typeof spec.value === 'string' ? (
+												<>
+													<span className='w-1/4 font-bold'>{spec.name}</span>
+													<span className='w-3/4 whitespace-nowrap'>
+														{spec.value}
+													</span>
+												</>
+											) : (
+												<div className='flex w-full flex-col'>
+													{spec.value.map((storageValue, index) => (
+														<div
+															className='flex w-full items-center'
 															key={index}
 														>
-															{index === 0 ? spec.name : ''}
-														</span>
-														<span className='w-3/4 whitespace-nowrap'>
-															{storageValue.value}
-														</span>
-													</div>
-												))}
-											</div>
-										)}
-									</li>
-								))}
-							</ul>
+															<span
+																className='w-1/4 font-bold'
+																key={index}
+															>
+																{index === 0 ? spec.name : ''}
+															</span>
+															<span className='w-3/4 whitespace-nowrap'>
+																{storageValue.value}
+															</span>
+														</div>
+													))}
+												</div>
+											)}
+										</li>
+									))}
+								</ul>
+							</div>
 						</SectionLayout>
 
 						<SectionLayout order={7}>
-							<SectionHeader>Workspace Equipment</SectionHeader>
-							<ul className='flex w-full flex-col items-center justify-center text-sm md:text-base'>
-								{workspaceItems.map((item) => (
-									<li
-										key={item.name}
-										className='mx-auto flex w-full items-center justify-center'
-									>
-										<span className='w-1/4 font-bold'>{item.name}</span>
-										<span className='w-3/4'>{item.value}</span>
-									</li>
-								))}
-							</ul>
+							<div className='flex w-full flex-col items-start md:flex-row md:gap-8'>
+								<div className='w-full md:w-2/6'>
+									<SectionHeader>Workspace Equipment</SectionHeader>
+								</div>
+								<ul className='flex w-full flex-col items-center justify-center text-sm md:w-4/6 md:text-base'>
+									{workspaceItems.map((item) => (
+										<li
+											key={item.name}
+											className='mx-auto flex w-full items-center justify-center'
+										>
+											<span className='w-1/4 font-bold'>{item.name}</span>
+											<span className='w-3/4'>{item.value}</span>
+										</li>
+									))}
+								</ul>
+							</div>
 						</SectionLayout>
 					</div>
 				</SectionLayout>

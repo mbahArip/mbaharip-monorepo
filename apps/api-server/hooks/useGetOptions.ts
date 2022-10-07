@@ -106,6 +106,14 @@ export const pageValidator = (count: number, options: GetOptions) => {
 		totalPages: 0,
 		currentPage: 0,
 	};
+	if (count === 0) {
+		const error = new Error('Data_Not_Found');
+		const stack = JSON.stringify(response);
+		error.name = 'Data_Not_Found';
+		error.message = 'No data found for this request.';
+		error.stack = stack;
+		throw error;
+	}
 
 	if (page && itemsPerPage) {
 		const totalPages = Math.ceil(count / itemsPerPage);

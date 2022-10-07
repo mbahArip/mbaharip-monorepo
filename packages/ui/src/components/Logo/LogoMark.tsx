@@ -50,3 +50,5 @@ export const LogoMark = ({
 		</svg>
 	);
 };
+
+export default {LogoMark};

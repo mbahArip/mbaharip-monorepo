@@ -7,12 +7,16 @@ const useFetch = (axiosParams: AxiosRequestConfig) => {
 	const [isLoading, setIsLoading] = useState(true);
 
 	const fetchData = async (params: AxiosRequestConfig) => {
+		setIsLoading(true);
+		setError(undefined);
+		setResponse(undefined);
+
 		try {
 			const result = await axios.request({
 				baseURL:
 					process.env.NODE_ENV === 'production'
 						? 'https://api.mbaharip.me/v1'
-						: 'http://localhost:8000/v1',
+						: 'http://192.168.0.102:8000/v1',
 				...params,
 			});
 			setResponse(result);
@@ -26,7 +30,7 @@ const useFetch = (axiosParams: AxiosRequestConfig) => {
 	useEffect(() => {
 		fetchData(axiosParams);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [axiosParams.url]);
 
 	return { response, error, isLoading };
 };

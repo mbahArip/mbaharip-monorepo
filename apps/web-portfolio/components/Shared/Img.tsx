@@ -56,7 +56,7 @@ const Img = forwardRef<HTMLDivElement, ImgProps>(
 					</div>
 				) : (
 					<div
-						className='relative'
+						className={`relative ${className}`}
 						ref={ref}
 					>
 						<img

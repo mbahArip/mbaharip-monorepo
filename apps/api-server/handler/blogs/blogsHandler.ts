@@ -19,10 +19,15 @@ const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 		const prismaOptions = convertToPrismaOptions(requestOptions);
 
 		try {
-			const databaseCount = await usePrisma.blogs.count();
+			let databaseCount = await usePrisma.blogs.count();
 			const databaseResponse = await usePrisma.blogs.findMany({
 				...prismaOptions,
 			});
+			if (requestOptions.query && requestOptions.query !== '') {
+				databaseCount = await usePrisma.blogs.count({
+					where: prismaOptions.where,
+				});
+			}
 
 			const {
 				currentPage,
@@ -49,6 +54,8 @@ const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 						...JSON.parse(error.stack),
 					}),
 				);
+			if (error.name === 'Data_Not_Found')
+				return res.status(404).json(useResponse(404, false, error.message));
 
 			return res.status(500).json(
 				useResponse(500, false, 'Fetch blogs failed.', {

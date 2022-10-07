@@ -1,5 +1,5 @@
+import { sign } from 'jsonwebtoken';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { encrypt } from '../../hooks/useEncryption';
 import useResponse from '../../hooks/useResponse';
 
 const authHandler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -20,7 +20,10 @@ const authHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 				.json(useResponse(400, false, 'Invalid secret key.'));
 
 		try {
-			const data = encrypt(process.env.CRYPTO_KEY as string);
+			const jwtData = sign(
+				{ validSecret: true, secretKey },
+				process.env.CRYPTO_KEY as string,
+			);
 
 			return res.status(200).json(
 				useResponse(
@@ -29,7 +32,7 @@ const authHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 					'Successfully authenticated.',
 					{},
 					{
-						apiKey: data,
+						apiKey: jwtData,
 					},
 				),
 			);

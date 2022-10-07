@@ -11,7 +11,7 @@ const useCORS = async (
 		methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
 		origin: '*',
 		optionsSuccessStatus: 200,
-		credentials: true,
+		// credentials: true,
 	};
 	await NextCors(req, res, options);
 	next();

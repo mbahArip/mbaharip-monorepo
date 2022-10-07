@@ -22,8 +22,20 @@
 	font-style: normal;
 	font-display: swap;
 }
+@font-face {
+	font-family: 'BEBAS NEUE';
+	src: url('./fonts/BebasNeue-Regular.woff2') format('woff2'),
+		url('./fonts/BebasNeue-Regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Kosugi&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Kosugi&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Zen+Antique+Soft&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 
 /**
  * Animation
@@ -133,5 +145,16 @@
 	}
 	a.about-link:hover::before {
 		@apply w-full;
+	}
+
+	/* Aspect ratio */
+	.aspect-square {
+		aspect-ratio: 1/1;
+	}
+	.aspect-16-9 {
+		aspect-ratio: 16/9;
+	}
+	.aspect-4-3 {
+		aspect-ratio: 4/3;
 	}
 }

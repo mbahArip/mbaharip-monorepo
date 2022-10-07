@@ -13,7 +13,7 @@ module.exports = {
 		},
 	},
 	plugins: ['prettier'],
-	ignorePatterns: ['.eslintrc.js', 'index.js'],
+	ignorePatterns: ['.eslintrc.js', 'index.js', 'tailwind.config.js'],
 	rules: {
 		'@next/next/no-img-element': 'off',
 		'@next/next/no-html-link-for-pages': 'off',

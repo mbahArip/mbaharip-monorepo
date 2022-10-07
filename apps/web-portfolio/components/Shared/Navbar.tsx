@@ -128,10 +128,15 @@ const Navbar: FC = () => {
 			<div className='fixed z-[1000] flex h-12 w-screen bg-mbaharip-dark/75 shadow-md shadow-mbaharip-dark backdrop-blur md:h-16 md:bg-mbaharip-dark/80'>
 				{/* Mobile */}
 				<div className='flex w-full items-center justify-between px-4 md:hidden'>
-					<LogoMark
-						size='small'
-						color='light'
-					/>
+					<div className='flex items-end gap-2'>
+						<LogoMark
+							size='small'
+							color='light'
+						/>
+						{process.env.NODE_ENV === 'development' && (
+							<span className='font-bebas'>Dev</span>
+						)}
+					</div>
 					<div
 						className='aspect-square relative right-4 grid place-items-center rounded'
 						onClick={(e) => {
@@ -172,11 +177,14 @@ const Navbar: FC = () => {
 						href='/'
 						passHref
 					>
-						<div>
+						<div className='flex items-end gap-2'>
 							<LogoMark
 								size='xsmall'
 								color='light'
 							/>
+							{process.env.NODE_ENV === 'development' && (
+								<span className='font-bebas'>Dev</span>
+							)}
 						</div>
 					</Link>
 					<div className='flex'>
@@ -187,7 +195,8 @@ const Navbar: FC = () => {
 							>
 								<a
 									className={`flex items-center gap-1 px-4  py-2 text-xl transition hover:opacity-100 ${
-										router.pathname === link.url
+										router.pathname.split('/')[1] === link.url.split('/')[1] &&
+										!link.external
 											? 'font-bold text-mbaharip-primary opacity-100'
 											: 'font-normal text-mbaharip-light opacity-75 hover:text-mbaharip-light-hover'
 									}`}
@@ -231,7 +240,8 @@ const Navbar: FC = () => {
 							>
 								<a
 									className={`flex w-screen items-center gap-1 px-16 text-3xl ${
-										router.pathname === link.url
+										router.pathname.split('/')[1] === link.url.split('/')[1] &&
+										!link.external
 											? 'font-bold text-mbaharip-primary'
 											: 'font-normal text-mbaharip-light'
 									}`}

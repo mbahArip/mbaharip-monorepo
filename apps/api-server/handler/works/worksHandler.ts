@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import useResponse from '../../hooks/useResponse';
 import type { GetOptions } from '../../hooks/useGetOptions';
 import {
 	checkOptions,
@@ -9,6 +8,7 @@ import {
 	PaginatedResponse,
 } from '../../hooks/useGetOptions';
 import usePrisma from '../../hooks/usePrisma';
+import useResponse from '../../hooks/useResponse';
 
 const worksHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const METHOD = req.method!.toUpperCase();
@@ -19,10 +19,15 @@ const worksHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 		const prismaOptions = convertToPrismaOptions(requestOptions);
 
 		try {
-			const databaseCount = await usePrisma.works.count();
+			let databaseCount = await usePrisma.works.count();
 			const databaseResponse = await usePrisma.works.findMany({
 				...prismaOptions,
 			});
+			if (requestOptions.query && requestOptions.query !== '') {
+				databaseCount = await usePrisma.works.count({
+					where: prismaOptions.where,
+				});
+			}
 
 			const {
 				currentPage,

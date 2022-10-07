@@ -1,16 +1,18 @@
 import {useNProgress} from '@tanem/react-nprogress';
+import {FC} from 'react';
+
 type LoadingBarProps = {
 	isRouteChanging: boolean;
 };
 
-export const LoadingBar: React.FC<LoadingBarProps> = ({isRouteChanging}) => {
+export const LoadingBar: FC<LoadingBarProps> = ({isRouteChanging}) => {
 	const {animationDuration, isFinished, progress} = useNProgress({
 		isAnimating: isRouteChanging,
 	});
 
 	return (
 		<>
-			<style jsx>{`
+			<style>{`
 				.container {
 					transition: opacity ${animationDuration}ms linear;
 				}
@@ -24,10 +26,10 @@ export const LoadingBar: React.FC<LoadingBarProps> = ({isRouteChanging}) => {
 					isFinished ? 'opacity-0' : 'opacity-100'
 				} container pointer-events-none`}
 			>
-				<div
-					className={`bg-mbaharip-primary bar fixed left-0 top-0 z-[1001] h-1 w-full md:h-0.5`}
-				/>
+				<div className="bg-mbaharip-primary bar fixed left-0 top-0 z-[1001] h-1 w-full md:h-1" />
 			</div>
 		</>
 	);
 };
+
+export default {LoadingBar};

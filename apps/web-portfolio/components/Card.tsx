@@ -1,8 +1,5 @@
 import Link from 'next/link';
-import { FC, Fragment } from 'react';
-import { Button } from 'ui';
-import useDeviceType from '../hooks/useDeviceType';
-import { capitalize } from '../utils/capitalize';
+import { FC } from 'react';
 import { formatDate } from '../utils/formatDate';
 import Img from './Shared/Img';
 
@@ -33,70 +30,55 @@ type WorkPostProps = {
 
 type CardProps = {
 	data: BlogPostProps | WorkPostProps;
-	type: 'blog' | 'work';
+	type: 'blogs' | 'works';
 };
 
-const Card: FC<CardProps> = ({ data, type }) => {
-	const { isDesktop } = useDeviceType();
-	return (
-		<div className='group flex h-28 w-full flex-grow overflow-hidden rounded-lg bg-mbaharip-light/10 transition hover:bg-mbaharip-light/20'>
-			<Link
-				href={`/${type}/${data.id}`}
-				passHref
-				prefetch={false}
-			>
-				<div>
-					<Img
-						src={data.thumbnail}
-						alt={data.title}
-						className='h-28 w-28 object-cover opacity-75 transition group-hover:opacity-100'
-						aspectRatio='square'
-					/>
-				</div>
-			</Link>
-			<div className='mx-auto flex w-3/4 flex-1 flex-col justify-between py-1 px-2'>
-				<div className='flex items-center justify-between'>
-					<Link
-						href={`/${type}/${data.id}`}
-						passHref
-						prefetch={false}
-					>
-						<a>
-							<h1 className='m-0 w-auto flex-shrink text-lg line-clamp-1'>
-								{capitalize(data.title)}
-							</h1>
-						</a>
-					</Link>
-					<span className='hidden flex-grow whitespace-nowrap text-end text-xs md:block'>
-						{formatDate(data.modifiedAt as Date, false, true)}
+const Card: FC<CardProps> = ({ data, type }) => (
+	<Link
+		href={`/${type}/${data.id}`}
+		className='h-full w-full'
+		passHref
+	>
+		<div
+			key={data.id}
+			className='group flex h-fit w-full flex-col items-center justify-start transition hover:bg-mbaharip-light/5'
+		>
+			<Img
+				src={data.thumbnail}
+				alt={data.title}
+				className='h-48 w-full rounded-lg object-cover opacity-75 transition group-hover:opacity-100'
+			/>
+			<div className='mt-2 flex w-full flex-col items-start justify-start p-2'>
+				<h2 className='font-semibold text-mbaharip-light group-hover:text-mbaharip-primary'>
+					{data.title}
+				</h2>
+				<div className='flex w-full flex-col items-start justify-start'>
+					<p className='cursor-pointer text-sm font-medium text-mbaharip-light/50 line-clamp-2'>
+						{data.summary}
+					</p>
+					<span className='text-xs font-medium text-mbaharip-light/25'>
+						{formatDate(data.createdAt as Date, false, true)}
 					</span>
-				</div>
-				<p className={`${isDesktop ? 'text-sm' : 'text-xs'} line-clamp-2`}>
-					{data.summary}
-				</p>
-				<div className='flex gap-1'>
-					{data.tags.map((tag, index) => (
-						<Fragment key={tag}>
-							{index < (isDesktop ? 3 : 2) && (
-								<Link
-									href={`/tags/${tag}`}
-									passHref
-									prefetch={false}
+					<div className='flex w-full flex-wrap gap-2 p-1'>
+						{data.tags.map((tag: any) => (
+							<Link
+								href={`/tag/${tag}`}
+								key={tag}
+								passHref
+							>
+								<span
+									key={tag}
+									className='px-1 py-0.5 text-xs font-medium text-mbaharip-light/75 hover:text-mbaharip-light-hover'
 								>
-									<Button
-										size='xs'
-										variant='outline'
-									>
-										{tag}
-									</Button>
-								</Link>
-							)}
-						</Fragment>
-					))}
+									# {tag}
+								</span>
+							</Link>
+						))}
+					</div>
 				</div>
 			</div>
 		</div>
-	);
-};
+	</Link>
+);
 
 export default Card;
