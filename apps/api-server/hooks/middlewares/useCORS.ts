@@ -1,20 +1,24 @@
-import Cors from 'cors';
+import Cors, { CorsRequest } from 'cors';
 import { NextApiRequest, NextApiResponse } from 'next';
-import NextCors from 'nextjs-cors';
 
-const useCORS = async (
-	req: NextApiRequest,
-	res: NextApiResponse,
-	next: any,
-) => {
-	const options: Cors.CorsOptions = {
-		methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH', 'DELETE'],
-		origin: '*',
-		optionsSuccessStatus: 200,
-		// credentials: true,
-	};
-	await NextCors(req, res, options);
-	next();
-};
+function initMiddleware(middleware: CorsRequest | any) {
+	return (req: NextApiRequest, res: NextApiResponse) =>
+		new Promise((resolve, reject) => {
+			middleware(req, res, (result: any) => {
+				if (result instanceof Error) {
+					return reject(result);
+				}
+				return resolve(result);
+			});
+		});
+}
+
+const allowedMethods = ['GET', 'POST', 'PUT', 'DELETE'];
+
+const useCORS = initMiddleware(
+	Cors({
+		methods: allowedMethods,
+	}),
+);
 
 export default useCORS;

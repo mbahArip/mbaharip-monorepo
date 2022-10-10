@@ -3,28 +3,24 @@ import slowDown from 'express-slow-down';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const applyMiddleware =
-	(middleware: any) => (req: NextApiRequest, res: NextApiResponse) =>
+	(middleware: any) => (request: NextApiRequest, response: NextApiResponse) =>
 		new Promise((resolve, reject) => {
-			middleware(req, res, (result: any) =>
+			middleware(request, response, (result: any) =>
 				result instanceof Error ? reject(result) : resolve(result),
 			);
 		});
 
-const getIP = (req: any) =>
-	req.ip ||
-	req.headers['x-forwarded-for'] ||
-	req.headers['x-real-ip'] ||
-	req.connection.remoteAddress;
+const getIP = (request: NextApiRequest | any) =>
+	request.ip ||
+	request.headers['x-forwarded-for'] ||
+	request.headers['x-real-ip'] ||
+	request.connection.remoteAddress;
 
-const requestLimit = 100;
-const requestWindowMs = 60 * 1000;
-const requestDelayAfter = Math.round(requestLimit / 2);
-const requestDelayMs = 500;
 export const getRateLimitMiddlewares = ({
-	limit = requestLimit,
-	windowMs = requestWindowMs,
-	delayAfter = requestDelayAfter,
-	delayMs = requestDelayMs,
+	limit = 30,
+	windowMs = 60 * 1000,
+	delayAfter = Math.round(10 / 2),
+	delayMs = 500,
 } = {}) => [
 	slowDown({ keyGenerator: getIP, windowMs, delayAfter, delayMs }),
 	rateLimit({ keyGenerator: getIP, windowMs, max: limit }),
@@ -32,30 +28,22 @@ export const getRateLimitMiddlewares = ({
 
 const middlewares = getRateLimitMiddlewares();
 
-const applyRateLimit = async (req: NextApiRequest, res: NextApiResponse) => {
+async function applyRateLimit(
+	request: NextApiRequest,
+	response: NextApiResponse,
+) {
 	await Promise.all(
-		middlewares.map(applyMiddleware).map((middleware) => middleware(req, res)),
+		middlewares
+			.map(applyMiddleware)
+			.map((middleware) => middleware(request, response)),
 	);
-};
+}
 
-const useRateLimit = async (
-	req: NextApiRequest,
-	res: NextApiResponse,
-	next: any,
-) => {
+const useRateLimit = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
-		if (process.env.NODE_ENV === 'production') {
-			await applyRateLimit(req, res);
-			res.setHeader(
-				'Cache-Control',
-				'public, max-age=3600, s-maxage=3600, stale-while-revalidate=60',
-			);
-			next();
-		}
+		return await applyRateLimit(req, res);
 	} catch (error) {
 		return res.status(429);
 	}
-	return next();
 };
-
 export default useRateLimit;

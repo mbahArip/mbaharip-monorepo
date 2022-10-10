@@ -1,13 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import nextConnect from 'next-connect';
-import useMiddleware from '../../../../../hooks/useMiddleware';
 import publishHandler from '../../../../../handler/blogs/publishHandler';
+import useMiddlewares from '../../../../../hooks/useMiddlewares';
 
-const handler = nextConnect<NextApiRequest, NextApiResponse>();
-handler.use(useMiddleware);
-
-handler.put(async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+	await useMiddlewares(req, res);
 	await publishHandler(req, res, false);
-});
-
+};
 export default handler;
