@@ -109,6 +109,11 @@ async function pingToDiscord(
 }
 
 const pingHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+	if (req.method !== 'POST') {
+		return res
+			.status(501)
+			.json(useResponse(501, false, 'Method not implemented'));
+	}
 	const { channel, token, apiKey } = req.query;
 	const gumroadResponse: GumroadResponse = {
 		seller_id: req.body.seller_id as string,
