@@ -1,49 +1,70 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import usePrisma from '../../hooks/usePrisma';
 import useResponse from '../../hooks/useResponse';
-import { parseImages, parseThumbnail } from '../../utils/parseThumbnail';
+import {
+	parseImages,
+	parseJSON,
+	parseThumbnail,
+} from '../../utils/parseThumbnail';
 
-const workHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const productHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const METHOD = req.method!.toUpperCase();
 	const id = req.query.id as string;
 
 	if (METHOD === 'GET') {
 		try {
-			const databaseResponse = await usePrisma.works.findUniqueOrThrow({
+			const databaseResponse = await usePrisma.products.findUniqueOrThrow({
 				where: { id },
 			});
 
 			return res
 				.status(200)
 				.json(
-					useResponse(200, true, 'Fetch work success.', {}, databaseResponse),
+					useResponse(
+						200,
+						true,
+						'Fetch product success.',
+						{},
+						databaseResponse,
+					),
 				);
 		} catch (error: any) {
 			if (error.name === 'NotFoundError')
-				return res.status(404).json(useResponse(404, false, 'Work not found.'));
+				return res
+					.status(404)
+					.json(useResponse(404, false, 'Product not found.'));
 
 			return res
 				.status(500)
-				.json(useResponse(500, false, 'Fetch work failed.', { error }));
+				.json(useResponse(500, false, 'Fetch product failed.', { error }));
 		}
 	}
 	if (METHOD === 'PUT') {
-		const { title, summary, content, thumbnail, images, tags } = req.body;
+		const { name, price, url, thumbnail, images, tags } = req.body;
 
 		const filledFields = [];
-		if (title) filledFields.push('title');
-		if (summary) filledFields.push('summary');
-		if (content) filledFields.push('summary');
+		if (name) filledFields.push('name');
+		if (price) filledFields.push('price');
+		if (url) filledFields.push('url');
 		if (thumbnail) filledFields.push('thumbnail');
-		if (images) filledFields.push('content');
+		if (images) filledFields.push('images');
 		if (tags) filledFields.push('tags');
 		if (!filledFields)
 			return res.status(400).json(
 				useResponse(400, false, 'Body must contain one of these fields.', {
-					availableFields: ['title', 'summary', 'thumbnail', 'images', 'tags'],
+					availableFields: [
+						'name',
+						'price',
+						'url',
+						'thumbnail',
+						'images',
+						'tags',
+					],
 				}),
 			);
 
+		const parsedPrice = parseJSON(price, res);
+		const parsedURL = parseJSON(url, res);
 		const parsedThumbnail = parseThumbnail(thumbnail, res);
 		const parsedImages = parseImages(images, res);
 
@@ -52,17 +73,16 @@ const workHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 			filledFields.forEach((field) => {
 				editedFields[field] = true;
 			});
-			const editedData: any = {};
-			filledFields.forEach((field) => {
-				if (field === 'thumbnail') editedData[field] = parsedThumbnail;
-				else if (field === 'images') editedData[field] = parsedImages;
-				else if (field === 'content') editedData[field] = content;
-				else editedData[field] = req.body[field];
-			});
 
-			const databaseResponse = await usePrisma.works.update({
+			const databaseResponse = await usePrisma.products.update({
 				where: { id },
-				data: { ...editedData },
+				data: {
+					...req.body,
+					price: parsedPrice,
+					url: parsedURL,
+					thumbnail: parsedThumbnail,
+					images: parsedImages,
+				},
 				select: {
 					id: true,
 					modifiedAt: true,
@@ -76,7 +96,7 @@ const workHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 					useResponse(
 						200,
 						true,
-						'Work updated successfully.',
+						'Update product success.',
 						{},
 						databaseResponse,
 					),
@@ -92,7 +112,7 @@ const workHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 	if (METHOD === 'DELETE') {
 		try {
-			const databaseResponse = await usePrisma.works.delete({
+			const databaseResponse = await usePrisma.products.delete({
 				where: { id },
 			});
 
@@ -102,7 +122,7 @@ const workHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 					useResponse(
 						200,
 						true,
-						'Work deleted successfully.',
+						'Delete product success.',
 						{},
 						databaseResponse,
 					),
@@ -117,7 +137,9 @@ const workHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 	}
 
-	return res.status(501).json(useResponse(501, false, 'Method not allowed.'));
+	return res
+		.status(501)
+		.json(useResponse(501, false, 'Method not implemented.'));
 };
 
-export default workHandler;
+export default productHandler;

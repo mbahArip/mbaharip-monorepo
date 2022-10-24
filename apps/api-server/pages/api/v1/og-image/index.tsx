@@ -16,12 +16,12 @@ export default async function handler(req: NextRequest) {
 	try {
 		const fontDataBebas = await fontBebas;
 		const fontDataOrientica = await fontOrientica;
-		const logoSize = 64;
+		const logoSize = 72;
 		const { searchParams } = new URL(req.url);
 		const hasTitle = searchParams.has('title');
-		const hasThumbnail = searchParams.has('thumbnail');
+		const hasId = searchParams.has('id');
 
-		if (!hasTitle || !hasThumbnail) {
+		if (!hasTitle || !hasId) {
 			return new ImageResponse(
 				(
 					<div
@@ -150,100 +150,107 @@ export default async function handler(req: NextRequest) {
 			);
 		}
 
-		const title = searchParams.get('title')?.slice(0, 100);
-		const thumbnail = searchParams.get('thumbnail');
+		const title = searchParams.get('title');
+		const id = searchParams.get('id');
 
 		return new ImageResponse(
 			(
 				<div
 					style={{
-						background: '#0d0d0d',
-						color: '#f1f1f1',
+						display: 'flex',
 						width: '100%',
 						height: '100%',
-						display: 'flex',
+						background: '#0d0d0d',
+						color: '#f1f1f1',
+						position: 'relative',
 					}}
 				>
-					<div
-						style={{
-							width: '40%',
-							height: '100%',
-							display: 'flex',
-							flexDirection: 'column',
-						}}
-					>
-						<div
-							style={{
-								fontFamily: 'Bebas',
-								fontSize: 60,
-								letterSpacing: '-0.025em',
-								padding: '0 16px',
-								whiteSpace: 'pre-wrap',
-								display: 'flex',
-							}}
-						>
-							<b>{title}</b>
-						</div>
-						<div
-							style={{
-								width: '100%',
-								height: '100%',
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'center',
-								position: 'absolute',
-							}}
-						>
-							<svg
-								version='1.1'
-								x='0px'
-								y='0px'
-								viewBox='0 0 598 598'
-								width={logoSize}
-								height={logoSize}
-								fill='#ea580c'
-								style={{
-									position: 'absolute',
-									bottom: 10,
-								}}
-							>
-								<polygon points='319.6,304.1 278.4,304.1 237.1,345.4 299,407.2 360.9,345.4 ' />
-							</svg>
-							<svg
-								version='1.1'
-								x='0px'
-								y='0px'
-								viewBox='0 0 598 598'
-								width={logoSize}
-								height={logoSize}
-								fill='#f1f1f1'
-								style={{
-									position: 'absolute',
-									bottom: 10,
-								}}
-							>
-								<polygon
-									points='206.2,190.8 31,366 31,407.2 113.5,489.7 175.3,489.7 216.5,448.5 216.5,427.9 175.3,386.6 
-	288.7,273.2 '
-								/>
-								<polygon
-									points='391.8,190.8 567,366 567,407.2 484.5,489.7 422.7,489.7 381.5,448.5 381.5,427.9 422.7,386.6 
-	309.3,273.2 '
-								/>
-								<polygon points='381.5,180.5 309.3,108.3 288.7,108.3 216.5,180.5 299,262.9 ' />
-							</svg>
-						</div>
-					</div>
-					{/* Thumbnail */}
 					<img
-						src={thumbnail!}
+						src={`https://cdn.mbaharip.me/api?path=/thumb/${id}_thumb.jpeg&raw=true`}
 						alt='thumb'
 						style={{
-							width: '60%',
+							width: '100%',
 							height: '100%',
 							objectFit: 'cover',
 						}}
 					/>
+					<img
+						src='https://cdn.mbaharip.me/api?path=/thumb/global-overlay.png&raw=true'
+						alt='overlay'
+						style={{
+							width: '100%',
+							height: '100%',
+							position: 'absolute',
+						}}
+					/>
+					<div
+						style={{
+							position: 'absolute',
+							bottom: 0,
+							fontFamily: 'Bebas',
+							fontSize: 72,
+							letterSpacing: '0',
+							padding: '16px',
+							whiteSpace: 'pre-wrap',
+							display: 'flex',
+							flexDirection: 'column',
+							maxWidth: '900px',
+							width: '900px',
+						}}
+					>
+						<b>{title}</b>
+					</div>
+					<div
+						style={{
+							width: '100%',
+							height: '100%',
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							position: 'absolute',
+						}}
+					>
+						<svg
+							version='1.1'
+							x='0px'
+							y='0px'
+							viewBox='0 0 598 598'
+							width={logoSize}
+							height={logoSize}
+							fill='#ea580c'
+							style={{
+								position: 'absolute',
+								bottom: 16,
+								right: 16,
+							}}
+						>
+							<polygon points='319.6,304.1 278.4,304.1 237.1,345.4 299,407.2 360.9,345.4 ' />
+						</svg>
+						<svg
+							version='1.1'
+							x='0px'
+							y='0px'
+							viewBox='0 0 598 598'
+							width={logoSize}
+							height={logoSize}
+							fill='#f1f1f1'
+							style={{
+								position: 'absolute',
+								bottom: 16,
+								right: 16,
+							}}
+						>
+							<polygon
+								points='206.2,190.8 31,366 31,407.2 113.5,489.7 175.3,489.7 216.5,448.5 216.5,427.9 175.3,386.6 
+	288.7,273.2 '
+							/>
+							<polygon
+								points='391.8,190.8 567,366 567,407.2 484.5,489.7 422.7,489.7 381.5,448.5 381.5,427.9 422.7,386.6 
+	309.3,273.2 '
+							/>
+							<polygon points='381.5,180.5 309.3,108.3 288.7,108.3 216.5,180.5 299,262.9 ' />
+						</svg>
+					</div>
 				</div>
 			),
 			{

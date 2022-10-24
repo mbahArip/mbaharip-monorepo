@@ -11,16 +11,14 @@ datasource db {
 }
 
 model links {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
   url               String
-  domain            String @default("mbaharip.me")
-  name              String
-  icon              String
-  viewcount         Int @default(0)
-  compact           Boolean @default(false)
+  domain            String  @default("mbaharip.me")
+  title             String
+  views             Int     @default(0)
   active            Boolean @default(true)
   hide              Boolean @default(false)
-  order             Int @default(0)
+  order             Int     @default(0)
 }
 
 model blogs {
@@ -28,7 +26,7 @@ model blogs {
   title             String
   summary           String
   content           String //Encrypt this field
-  thumbnail         String
+  thumbnail         Json
   tags              String[]
   views             Int @default(0)
   published         Boolean @default(true)
@@ -37,6 +35,7 @@ model blogs {
   comments          comments[] @relation("BlogComments")
 }
 
+// Not used for now. Will be used in the future.
 model comments {
   id                String @id @default(auto()) @map("_id") @db.ObjectId
   name              String
@@ -45,53 +44,56 @@ model comments {
   blogId            String
   blog              blogs @relation("BlogComments", fields: [blogId], references: [id])
   createdAt         DateTime @default(now())
-  unread            Boolean @default(true)
+  read            Boolean @default(false)
   reply             Boolean @default(false)
   replyTo           String @default("")
 }
 
 model works {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
   title             String
   summary           String
-  images            String[]
-  thumbnail         String
+  content           String //Encrypt this field
+  thumbnail         Json[]
+  images            Json[]
   tags              String[]
-  views             Int @default(0)
-  published         Boolean @default(true)
-  createdAt         DateTime @default(now())
-  modifiedAt        DateTime @updatedAt
+  views             Int       @default(0)
+  published         Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  modifiedAt        DateTime  @updatedAt
 }
 
 model products {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
   name              String
-  priceLocal        Int
-  priceUSD          Int
-  thumbnail         String
-  images            String[]
+  price             Json[]
+  url               Json[]
+  thumbnail         Json
+  images            Json[]
   tags              String[]
-  views             Int @default(0)
-  urlGumroad        String
-  urlKaryakarsa     String
+  views             Int       @default(0)
+  published         Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  modifiedAt        DateTime  @updatedAt
 }
 
 
 model promotions {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  codeID            String
-  promoCode         String
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  promoCode         String    // Promo code (ex: BDAY50 - Off 50% for birthday)
+  codeId            String    // Code ID from gumroad
   expiredAt         DateTime
 }
 
 model shortlinks {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  active            Boolean @default(true)
-  alias             String @unique
-  secret            String
-  destination       String
-  visits            Int @default(0)
-  createdAt         DateTime @default(now())
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  alias             String    @unique
+  secret            String  // Encrypt this field
+  url               String
+  active            Boolean   @default(true)
+  views             Int       @default(0)
+  createdAt         DateTime  @default(now())
+  modifiedAt        DateTime  @updatedAt
 }
 
 model access {
@@ -102,15 +104,16 @@ model access {
   expires_in        Int
 }
 
-model nijigen_logo {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  category          String
-  title             String @unique
+// Project ideas
+model acglogo {
+  id                String    @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  series            String
+  url               Json
+  thumbnail         Json
   tags              String[]
-  thumbnail         String
-  svgImage          String
-  pngImage          String
-  downloads         Int @default(0)
-  createdAt         DateTime @default(now())
-  modifiedAt        DateTime @updatedAt
+  views             Int       @default(0)
+  published         Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  modifiedAt        DateTime  @updatedAt
 }

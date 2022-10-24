@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { encrypt } from '../../hooks/useEncryption';
 import type { GetOptions } from '../../hooks/useGetOptions';
 import {
 	checkOptions,
@@ -10,9 +9,13 @@ import {
 } from '../../hooks/useGetOptions';
 import usePrisma from '../../hooks/usePrisma';
 import useResponse from '../../hooks/useResponse';
-import { parseThumbnail } from '../../utils/parseThumbnail';
+import {
+	parseImages,
+	parseJSON,
+	parseThumbnail,
+} from '../../utils/parseThumbnail';
 
-const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const productsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const METHOD = req.method!.toUpperCase();
 
 	if (METHOD === 'GET') {
@@ -21,12 +24,12 @@ const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 		const prismaOptions = convertToPrismaOptions(requestOptions);
 
 		try {
-			let databaseCount = await usePrisma.blogs.count();
-			const databaseResponse = await usePrisma.blogs.findMany({
+			let databaseCount = await usePrisma.products.count();
+			const databaseResponse = await usePrisma.products.findMany({
 				...prismaOptions,
 			});
 			if (requestOptions.query && requestOptions.query !== '') {
-				databaseCount = await usePrisma.blogs.count({
+				databaseCount = await usePrisma.products.count({
 					where: prismaOptions.where,
 				});
 			}
@@ -44,7 +47,7 @@ const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 					useResponse(
 						200,
 						true,
-						'Fetch all blogs success.',
+						'Fetch all products success.',
 						{ currentPage, totalPages, isNextPage, isPrevPage },
 						databaseResponse,
 					),
@@ -56,63 +59,53 @@ const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 						...JSON.parse(error.stack),
 					}),
 				);
-			if (error.name === 'Data_Not_Found')
-				return res.status(404).json(useResponse(404, false, error.message));
 
 			return res.status(500).json(
-				useResponse(500, false, 'Fetch blogs failed.', {
+				useResponse(500, false, 'Fetch works failed.', {
 					error: error.message,
 				}),
 			);
 		}
 	}
 	if (METHOD === 'POST') {
-		const {
-			title,
-			summary,
-			content,
-			thumbnail,
-			tags,
-		}: {
-			title: string;
-			summary: string;
-			content: string;
-			thumbnail: string;
-			tags: string[];
-		} = req.body;
+		const { name, price, url, thumbnail, images, tags } = req.body;
 
 		const missingFields = [];
-		if (!title) missingFields.push('title');
-		if (!summary) missingFields.push('summary');
-		if (!content) missingFields.push('content');
+		if (!name) missingFields.push('name');
+		if (!price) missingFields.push('price');
+		if (!url) missingFields.push('url');
 		if (!thumbnail) missingFields.push('thumbnail');
+		if (!images) missingFields.push('images');
 		if (!tags) missingFields.push('tags');
 		if (missingFields.length > 0)
-			return res.status(400).json(
-				useResponse(400, false, `Missing required fields.`, {
-					missingFields,
-				}),
-			);
+			return res
+				.status(400)
+				.json(useResponse(400, false, 'Missing fields.', { missingFields }));
 
+		const parsedPrice = parseJSON(price, res);
+		const parsedURL = parseJSON(url, res);
 		const parsedThumbnail = parseThumbnail(thumbnail, res);
+		const parsedImages = parseImages(images, res);
 
 		try {
-			const databaseResponse = await usePrisma.blogs.create({
+			const databaseResponse = await usePrisma.products.create({
 				data: {
 					...req.body,
-					content: encrypt(content),
+					price: parsedPrice,
+					url: parsedURL,
 					thumbnail: parsedThumbnail,
+					images: parsedImages,
 				},
 			});
 
 			return res
 				.status(201)
 				.json(
-					useResponse(201, true, 'Create blog success.', {}, databaseResponse),
+					useResponse(201, true, 'Create product success.', databaseResponse),
 				);
 		} catch (error: any) {
 			return res.status(500).json(
-				useResponse(500, false, 'Create blog failed.', {
+				useResponse(500, false, 'Create product failed.', {
 					error: error.message,
 				}),
 			);
@@ -123,13 +116,13 @@ const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		if (!ids)
 			return res.status(400).json(
-				useResponse(400, false, 'Missing required fields.', {
+				useResponse(400, false, 'Missing fields.', {
 					missingFields: ['ids'],
 				}),
 			);
 
 		try {
-			const databaseResponse = await usePrisma.blogs.deleteMany({
+			const databaseResponse = await usePrisma.products.deleteMany({
 				where: {
 					id: {
 						in: ids,
@@ -140,21 +133,20 @@ const blogsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 			if (databaseResponse.count === 0)
 				return res
 					.status(404)
-					.json(useResponse(404, false, 'Blog not found.', { ids }));
+					.json(useResponse(404, false, 'Product not found.', { ids }));
 
 			return res
 				.status(200)
 				.json(
-					useResponse(200, true, 'Delete blogs success.', {}, databaseResponse),
+					useResponse(200, true, 'Delete product success.', databaseResponse),
 				);
 		} catch (error: any) {
 			return res
 				.status(500)
-				.json(useResponse(500, false, 'Delete blogs failed.', { error }));
+				.json(useResponse(500, false, 'Delete works failed.', { error }));
 		}
 	}
-
 	return res.status(501).json(useResponse(501, false, 'Not implemented.'));
 };
 
-export default blogsHandler;
+export default productsHandler;

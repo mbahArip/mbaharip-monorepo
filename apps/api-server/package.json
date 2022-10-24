@@ -11,7 +11,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
-		"@prisma/client": "4.1.1",
+		"@prisma/client": "^4.5.0",
 		"@vercel/og": "^0.0.15",
 		"axios": "^0.27.2",
 		"cors": "^2.8.5",
@@ -44,7 +44,7 @@
 		"eslint": "^8.21.0",
 		"eslint-config-next": "12.2.5",
 		"prettier": "^2.7.1",
-		"prisma": "4.1.1",
+		"prisma": "^4.5.0",
 		"tsconfig": "*",
 		"typescript": "^4.7.4"
 	}

@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import useResponse from '../../hooks/useResponse';
+import { encrypt } from '../../hooks/useEncryption';
 import usePrisma from '../../hooks/usePrisma';
+import useResponse from '../../hooks/useResponse';
+import { parseThumbnail } from '../../utils/parseThumbnail';
 
 const blogHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const METHOD = req.method!.toUpperCase();
@@ -45,15 +47,23 @@ const blogHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 				}),
 			);
 
+		const parsedThumbnail = parseThumbnail(thumbnail, res);
+
 		try {
 			const editedFields: any = {};
 			filledFields.forEach((field) => {
 				editedFields[field] = true;
 			});
+			const editedData: any = {};
+			filledFields.forEach((field) => {
+				if (field === 'thumbnail') editedData[field] = parsedThumbnail;
+				else if (field === 'content') editedData[field] = encrypt(content);
+				else editedData[field] = req.body[field];
+			});
 
 			const databaseResponse = await usePrisma.blogs.update({
 				where: { id },
-				data: { ...req.body },
+				data: { ...editedData },
 				select: {
 					id: true,
 					modifiedAt: true,

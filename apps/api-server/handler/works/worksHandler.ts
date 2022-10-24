@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { encrypt } from '../../hooks/useEncryption';
 import type { GetOptions } from '../../hooks/useGetOptions';
 import {
 	checkOptions,
@@ -9,6 +10,7 @@ import {
 } from '../../hooks/useGetOptions';
 import usePrisma from '../../hooks/usePrisma';
 import useResponse from '../../hooks/useResponse';
+import { parseImages, parseThumbnail } from '../../utils/parseThumbnail';
 
 const worksHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const METHOD = req.method!.toUpperCase();
@@ -63,13 +65,14 @@ const worksHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 	}
 	if (METHOD === 'POST') {
-		const { title, summary, content, thumbnail, tags } = req.body;
+		const { title, summary, content, thumbnail, images, tags } = req.body;
 
 		const missingFields = [];
 		if (!title) missingFields.push('title');
 		if (!summary) missingFields.push('summary');
 		if (!content) missingFields.push('content');
 		if (!thumbnail) missingFields.push('thumbnail');
+		if (!images) missingFields.push('images');
 		if (!tags) missingFields.push('tags');
 		if (missingFields.length > 0)
 			return res.status(400).json(
@@ -78,9 +81,17 @@ const worksHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 				}),
 			);
 
+		const parsedThumbnail = parseThumbnail(thumbnail, res);
+		const parsedImages = parseImages(images, res);
+
 		try {
 			const databaseResponse = await usePrisma.works.create({
-				data: { ...req.body },
+				data: {
+					...req.body,
+					content: encrypt(content),
+					thumbnail: parsedThumbnail,
+					images: parsedImages,
+				},
 			});
 
 			return res
