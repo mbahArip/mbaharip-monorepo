@@ -4,7 +4,11 @@ import useResponse from '../useResponse';
 
 const useAuthorization = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { 'x-api-key': apiKey } = req.headers;
-	if (req.method !== 'GET' && !req.url?.includes('authentication')) {
+	if (
+		req.method !== 'GET' &&
+		!req.url?.includes('authentication') &&
+		!req.url?.includes('gumroad')
+	) {
 		if (!apiKey) {
 			return res.status(401).json(useResponse(401, false, 'Unauthorized.'));
 		}
