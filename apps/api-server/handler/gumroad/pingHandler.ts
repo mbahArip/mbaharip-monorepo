@@ -71,8 +71,8 @@ async function pingToDiscord(
 									maximumFractionDigits: 2,
 								}).format(gumroadResponse.price / 100)}
                                 
-                [View product](${gumroadResponse.product_permalink})
-                [Setup your own notification](https://www.mbaharip.me/gumroad-ping)`,
+                [View product](${gumroadResponse.product_permalink})`,
+				// [Setup your own notification](https://www.mbaharip.me/gumroad-ping)
 				color: 15856113,
 				timestamp: new Date(gumroadResponse.sale_timestamp).toISOString(),
 				fields: [
