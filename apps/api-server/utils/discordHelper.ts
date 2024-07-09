@@ -39,7 +39,10 @@ const postToDiscord = async (
 	content: string = '',
 	useEmbed: boolean = false,
 	embeds?: Embeds,
-	avatar?: string;
+	user?: {
+		username?: string;
+		avatar?: string;
+	}
 ) => {
 	type Embed = {
 		title: string;
@@ -56,6 +59,7 @@ const postToDiscord = async (
 	};
 	const dataPayload: DataPayload = {
 		content,
+		username: username,
 		avatar_url: avatar
 	};
 

@@ -57,21 +57,25 @@ export default async function hoyoLogin(req: NextApiRequest, res: NextApiRespons
         const res = await fetch(url, {method: 'POST', headers, body}).then(res => res.json());
     
         if(res.message === 'OK' || res.retcode === 0) {
-            await postToDiscord('scheduler', `${gameName[game]} Checked In!`, true, {
+            await postToDiscord('scheduler', ``, true, {
                 title: `✅ ${gameName[game]} check in success`,
                 description: `Successfully checked in to ${gameName[game]}`,
                 timestamp: new Date(),
                 footerText: "Scheduler",
                 fields: [],
+            }, {
+                username: `${gameName[game]} Scheduler`,
                 avatar: avatar[game]
             });
         } else if(res.message.includes('already') || res.retcode === -5003) {
-            await postToDiscord('scheduler', `${gameName[game]} Already Checked In!!`, true, {
+            await postToDiscord('scheduler', ``, true, {
                 title: `✅ ${gameName[game]} already checked in for today`,
                 description: `Check in to ${gameName[game]} aborted because you already checked in for today`,
                 timestamp: new Date(),
                 footerText: "Scheduler",
                 fields: [],
+            }, {
+                username: `${gameName[game]} Scheduler`,
                 avatar: avatar[game]
             });
         } else {
@@ -79,12 +83,14 @@ export default async function hoyoLogin(req: NextApiRequest, res: NextApiRespons
         }
     } catch (error) {
         const e = error as Error;
-        await postToDiscord('scheduler', `${gameName[game]} Failed to Checked In!`, true, {
+        await postToDiscord('scheduler', ``, true, {
             title: `❌ ${gameName[game]} check in failed`,
             description: `Failed checked in to ${gameName[game]}\nError: ${e.message}`,
             timestamp: new Date(),
             footerText: "Scheduler",
             fields: [],
+        }, {
+            username: `${gameName[game]} Scheduler`,
             avatar: avatar[game]
         });
         return res.status(500).json(useResponse(500, false, `Failed`))
