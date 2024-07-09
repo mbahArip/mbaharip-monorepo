@@ -57,7 +57,7 @@ export default async function hoyoLogin(req:NextApiRequest, res: NextApiResponse
                 title: `✅ ${gameName[game]} check in success`,
                 description: `Successfully checked in to ${gameName[game]}`,
                 timestamp: new Date(),
-                footerText: "Scheduler"
+                footerText: "Scheduler",
                 fields: [],
             });
         } else if(res.message.includes('already') || res.retcode === -5003) {
@@ -65,7 +65,7 @@ export default async function hoyoLogin(req:NextApiRequest, res: NextApiResponse
                 title: `✅ ${gameName[game]} already checked in for today`,
                 description: `Check in to ${gameName[game]} aborted because you already checked in for today`,
                 timestamp: new Date(),
-                footerText: "Scheduler"
+                footerText: "Scheduler",
                 fields: [],
             });
         } else {
@@ -76,7 +76,7 @@ export default async function hoyoLogin(req:NextApiRequest, res: NextApiResponse
             title: `❌ ${gameName[game]} check in failed`,
             description: `Failed checked in to ${gameName[game]}\nError: ${error.message}`,
             timestamp: new Date(),
-            footerText: "Scheduler"
+            footerText: "Scheduler",
             fields: [],
         });
     }
