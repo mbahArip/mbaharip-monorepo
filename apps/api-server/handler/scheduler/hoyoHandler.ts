@@ -69,7 +69,7 @@ export default async function hoyoLogin(req:NextApiRequest, res: NextApiResponse
                 fields: [],
             });
         } else {
-            throw new Error(json.message || "Unknown Error");
+            throw new Error(res.message || "Unknown Error");
         }
     } catch (error) {            
         await postToDiscord('scheduler', `${gameName[game]} Failed to Checked In!`, true, {
