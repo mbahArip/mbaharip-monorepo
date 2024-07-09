@@ -12,6 +12,10 @@ const endpoint: Record<Game, string> = {
   zzz: 'https://sg-act-nap-api.hoyolab.com/event/luna/zzz/os/sign?act_id=e202406031448091',
   genshin:  'https://sg-hk4e-api.hoyolab.com/event/sol/sign?act_id=e202102251931481',
 }
+const avatar: Record<Game, string> = {
+    zzz: 'https://pbs.twimg.com/profile_images/1731489568640446464/pZXxBwfJ_400x400.jpg',
+    genshin: 'https://pbs.twimg.com/profile_images/1774799005261918208/lHTwTlxt_400x400.jpg'
+}
 
 export default async function hoyoLogin(req: NextApiRequest, res: NextApiResponse, game: Game) {
     const {cookie} = req.body;
@@ -59,6 +63,7 @@ export default async function hoyoLogin(req: NextApiRequest, res: NextApiRespons
                 timestamp: new Date(),
                 footerText: "Scheduler",
                 fields: [],
+                avatar: avatar[game]
             });
         } else if(res.message.includes('already') || res.retcode === -5003) {
             await postToDiscord('scheduler', `${gameName[game]} Already Checked In!!`, true, {
@@ -67,6 +72,7 @@ export default async function hoyoLogin(req: NextApiRequest, res: NextApiRespons
                 timestamp: new Date(),
                 footerText: "Scheduler",
                 fields: [],
+                avatar: avatar[game]
             });
         } else {
             throw new Error(res.message || "Unknown Error");
@@ -79,6 +85,7 @@ export default async function hoyoLogin(req: NextApiRequest, res: NextApiRespons
             timestamp: new Date(),
             footerText: "Scheduler",
             fields: [],
+            avatar: avatar[game]
         });
         return res.status(500).json(useResponse(500, false, `Failed`))
     }
