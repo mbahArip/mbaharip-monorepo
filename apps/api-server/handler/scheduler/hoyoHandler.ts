@@ -71,6 +71,7 @@ export default async function hoyoLogin(req:NextApiRequest, res: NextApiResponse
         } else {
             throw new Error(res.message || "Unknown Error");
         }
+        return res.status(200).json(200, true, `Success`)
     } catch (error) {
         const e = error as Error;
         await postToDiscord('scheduler', `${gameName[game]} Failed to Checked In!`, true, {
@@ -80,5 +81,6 @@ export default async function hoyoLogin(req:NextApiRequest, res: NextApiResponse
             footerText: "Scheduler",
             fields: [],
         });
+        return res.status(500).json(useResponse(500, false, `Failed`))
     }
 }
