@@ -61,8 +61,8 @@ const postToDiscord = async (
 	};
 	const dataPayload: DataPayload = {
 		content,
-		username: username,
-		avatar_url: avatar
+		username: user.username || undefined,
+		avatar_url: user.avatar || undefined
 	};
 
 	if (useEmbed) {
