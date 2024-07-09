@@ -56,6 +56,8 @@ const postToDiscord = async (
 	type DataPayload = {
 		content: string;
 		embeds?: Embed[];
+		username?: string;
+		avatar?: string;
 	};
 	const dataPayload: DataPayload = {
 		content,
