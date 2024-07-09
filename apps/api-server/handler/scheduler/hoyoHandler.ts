@@ -82,5 +82,5 @@ export default async function hoyoLogin(req: NextApiRequest, res: NextApiRespons
         });
         return res.status(500).json(useResponse(500, false, `Failed`))
     }
-    return res.status(200).json(200, true, `Success`)
+    return res.status(200).json(useResponse(200, true, `Success`))
 }
