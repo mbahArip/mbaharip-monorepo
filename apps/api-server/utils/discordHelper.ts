@@ -61,8 +61,8 @@ const postToDiscord = async (
 	};
 	const dataPayload: DataPayload = {
 		content,
-		username: user.username || undefined,
-		avatar_url: user.avatar || undefined
+		username: user?.username || undefined,
+		avatar_url: user?.avatar || undefined
 	};
 
 	if (useEmbed) {
