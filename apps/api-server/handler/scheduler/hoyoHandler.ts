@@ -71,10 +71,11 @@ export default async function hoyoLogin(req:NextApiRequest, res: NextApiResponse
         } else {
             throw new Error(res.message || "Unknown Error");
         }
-    } catch (error) {            
+    } catch (error) {
+        const e = error as Error;
         await postToDiscord('scheduler', `${gameName[game]} Failed to Checked In!`, true, {
             title: `❌ ${gameName[game]} check in failed`,
-            description: `Failed checked in to ${gameName[game]}\nError: ${error.message}`,
+            description: `Failed checked in to ${gameName[game]}\nError: ${e.message}`,
             timestamp: new Date(),
             footerText: "Scheduler",
             fields: [],
